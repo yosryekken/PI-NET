@@ -1,0 +1,16 @@
+D:\SEM1\VSProject\gestionSinitre\Domain\bin\Debug\Domain.dll.config
+D:\SEM1\VSProject\gestionSinitre\Domain\bin\Debug\Domain.dll
+D:\SEM1\VSProject\gestionSinitre\Domain\bin\Debug\Domain.pdb
+D:\SEM1\VSProject\gestionSinitre\Domain\bin\Debug\EntityFramework.dll
+D:\SEM1\VSProject\gestionSinitre\Domain\bin\Debug\EntityFramework.SqlServer.dll
+D:\SEM1\VSProject\gestionSinitre\Domain\bin\Debug\MySql.Data.dll
+D:\SEM1\VSProject\gestionSinitre\Domain\bin\Debug\MySql.Data.Entity.EF6.dll
+D:\SEM1\VSProject\gestionSinitre\Domain\bin\Debug\EntityFramework.xml
+D:\SEM1\VSProject\gestionSinitre\Domain\bin\Debug\EntityFramework.SqlServer.xml
+D:\SEM1\VSProject\gestionSinitre\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache
+D:\SEM1\VSProject\gestionSinitre\Domain\obj\Debug\Domain.dll
+D:\SEM1\VSProject\gestionSinitre\Domain\obj\Debug\Domain.pdb
+D:\SEM1\VSProject\gestionSinitre\Domain\bin\Debug\MySql.Data.xml
+D:\SEM1\VSProject\gestionSinitre\Domain\bin\Debug\MySql.Data.Entity.EF6.xml
+D:\SEM1\VSProject\gestionSinitre\Domain\bin\Debug\fr\EntityFramework.resources.dll
+D:\SEM1\VSProject\gestionSinitre\Domain\bin\Debug\fr\EntityFramework.SqlServer.resources.dll
