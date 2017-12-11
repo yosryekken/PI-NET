@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace gestionSinisterWeb.Controllers
+namespace PIMVC.Controllers
 {
     public class HomeController : Controller
     {
