@@ -1,0 +1,49 @@
+﻿
+@model gestionSinisterWeb.Models.ViewReclamationModel
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Reclamation</title>
+</head>
+<body>
+              
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="ui-g-12">
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @placeholder = "Email" } })
+            @Html.ValidationMessageFor(model => model.Email, "")
+            <script id="j_idt88_s" type="text/javascript">PrimeFaces.cw("InputText","widget_j_idt88",{id:"j_idt88"});</script>
+        </div>
+                                        <div class="ui-g-12">
+                                            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @type = "password", @placeholder = "Mot de passe" } })
+                                            @Html.ValidationMessageFor(model => model.sujet, "")
+                                            <script id="j_idt90_s" type="text/javascript">PrimeFaces.cw("InputText","widget_j_idt90",{id:"j_idt90"});</script>
+                                        </div>
+                                        <div class="ui-g-12">
+                                            @Html.EditorFor(model => model.sujet, new { htmlAttributes = new {  @placeholder = "Sujet" } })
+                                            @Html.ValidationMessageFor(model => model.sujet, "")
+                                            <script id="j_idt90_s" type="text/javascript">PrimeFaces.cw("InputText","widget_j_idt90",{id:"j_idt90"});</script>
+                                        </div>
+
+                                        <div class="ui-g-12">
+                                            @Html.TextAreaFor(model => model.description, new {  @cols = 5, @rows = 10, @placeholder = "Message", @maxlength = "2147483647" })
+
+                                            <script id="j_idt92_s" type="text/javascript">$(function(){PrimeFaces.cw("InputTextarea","widget_j_idt92",{id:"j_idt92",autoResize:false});});</script>
+                                        </div>
+                                        <div class="ui-g-12">
+
+
+                                            <button type="submit" id="j_idt94" name="j_idt94" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left"><span class="ui-button-icon-left ui-icon ui-c fa fa-paper-plane-o"></span><span class="ui-button-text ui-c">Send</span></button>
+                                            <script id="j_idt94_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_j_idt94",{id:"j_idt94"});</script>
+                                        </div>
+    }
+       
+    
+</body>
+</html>
