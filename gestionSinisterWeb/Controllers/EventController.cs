@@ -1,139 +1,161 @@
-﻿using Domain.Entites;
-using gestionSinisterWeb.Models;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using iTextSharp.tool.xml;
+using pi.data.Infrastructure;
+using pi.domain.Entities;
+using pi.service.Repositories;
+using pi.web.Models;
+using Rotativa.MVC;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
-namespace gestionSinisterWeb.Controllers
+
+
+
+namespace pi.web.Controllers
 {
-    public class EventController : Controller
+    public class EvenementController : Controller
     {
-        EventService bs = null;
 
+        public static int UserId = 1;
+        EvenementService ise = null;
+        IUnitOfWork iuw = null;
 
-        public EventController()
+        public EvenementController()
         {
-            bs = new EventService();
-            
+            ise = new EvenementService();
         }
 
-        // GET: Event
-        public ActionResult Index()
+        // GET: Evenement********************************************************
+        public ActionResult List()
         {
-            List<EventModels> list = new List<EventModels>();
-
-            if (ModelState.IsValid)
+            var Exhibition = ise.getAllEvenement();
+            List<EvenementModel> fVM = new List<EvenementModel>();
+            foreach (var item in Exhibition)
             {
-                foreach (var item in bs.getAllEvents())
-                {
-                    EventModels evm = new EventModels();
-
-                    evm.id = item.id;
-                    evm.dateDebut = item.dateDebut;
-                    evm.dateFin = item.dateFin;
-                    evm.description = item.description;
-                    evm.heure = item.heure;
-                    evm.localisation = item.localisation;
-                    evm.nbrmaxpart = item.nbrmaxpart;
-                    evm.titre = item.titre;
-
-                    list.Add(evm);
-                }
-
-                return View(list);
+                fVM.Add(
+                    new EvenementModel
+                    {
+                        EvenementId = item.EvenementId,
+                        Description = item.Description,
+                        Title = item.Title,
+                        Image = item.Image,
+                        Start_Date = item.Start_Date,
+                        Finish_Date = item.Finish_Date,
+                        AgenceId = item.AgenceId
+                    });
             }
-            return View(list);
+            return View(fVM);
         }
 
-        // GET: Event/Details/5
+        // GET: Evenement/Details/5
         public ActionResult Details(int id)
         {
-            evenement p = bs.GetById(id);
-            EventModels pm = new EventModels
+            Evenement c = ise.getEvenementById(id);
 
-            {
-                dateDebut = p.dateDebut,
-                dateFin = p.dateFin,
-                description = p.description,
-                localisation = p.localisation,
-                nbrmaxpart = p.nbrmaxpart,
-                titre = p.titre,
-
-            };
-
-
-            return View(pm);
+            return View(c);
         }
 
-        // GET: Event/Create
+        // GET: Evenement/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Event/Create
+        // POST: Evenement/Create****************************************************
         [HttpPost]
-        public ActionResult Create(EventModels b)
+        public ActionResult Create( Evenement e, HttpPostedFileBase image)
         {
-            evenement p = new evenement
+            if (!ModelState.IsValid || image == null || image.ContentLength == 0)
             {
-                dateDebut = b.dateDebut,
-                dateFin = b.dateFin,
-                description = b.description,
-                localisation = b.localisation,
-                nbrmaxpart = b.nbrmaxpart,
-                titre = b.titre,
-          
-            };
-            bs.createEvent(p);
-            bs.Commit();
-            return RedirectToAction("Index");
-        }
+                RedirectToAction("List");
+            }
+        
+                e.AgenceId = 1;
+               e.Image = image.FileName;
+                ise.createEvenement(e);
+                var path = Path.Combine(Server.MapPath("~/Content/Upload/"), image.FileName);
+                image.SaveAs(path);
+                return RedirectToAction("List", "Evenement");
 
-        // GET: Event/Edit/5
-        public ActionResult Edit(int id)
-        {
             return View();
         }
+        //********************************************************************************
 
-        // POST: Event/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        // GET: Evenement/Edit/5
+        public ActionResult Edit(int id)
         {
-            try
+            if (id == null)
             {
-                // TODO: Add update logic here
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Evenement c = ise.getEvenementById(id);
+            if (c == null)
+            {
+                return HttpNotFound();
+            }
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return View(c);
         }
 
-        // GET: Event/Delete/5
+        // POST: Evenement/Edit/5
+        [HttpPost]
+        public ActionResult Edit(Evenement e)
+        {
+            if (ModelState.IsValid)
+            {
+                ise.updateEvenement(e);
+                TempData.Clear();
+                TempData["updated"] = e.Title;
+                return RedirectToAction("List");
+            }
+            return View(e);
+        }
+
+        // GET: Evenement/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: Event/Delete/5
+        // DELETE: Evenement/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            ise.deleteEvenementById(id);
+            var hs = ise.getAllEvenement();
+            TempData.Clear();
+            TempData["deleted"] = "1";
+            return RedirectToAction("List", hs);
         }
+
+
+    
+        public ActionResult ExportPdf()
+        {
+
+            return new ActionAsPdf("List")
+            {
+
+                FileName = Server.MapPath("~/Content/List.pdf")
+
+            };
+
+        }
+
+
+
+
+
+
+
+
+
     }
+
+
 }
