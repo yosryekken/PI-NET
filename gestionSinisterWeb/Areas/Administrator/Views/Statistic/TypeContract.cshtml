@@ -1,0 +1,149 @@
+﻿
+@{
+    ViewBag.Title = "TypeContract";
+    Layout = "~/Areas/Administrator/Views/Shared/_adminLayout.cshtml";
+}
+
+<h3>Type Contract</h3>
+
+<html>
+<head>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/Chart.min.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        #chart_container {
+            width: 400px;
+            height: 400px;
+            border: 1px solid #ddd;
+            padding: 1px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    @* ---------------------------------------------------------------------------------------- *@
+    @*//------------ Type Contract-- ------------------------------------------------------------------*@
+    @* ---------------------------------------------------------------------------------------- *@
+
+    
+    <label>
+        <input class="testTypeContract" name="i" type="radio" value="bar">
+        Bar Chart
+    </label>
+    <label>
+        <input class="testTypeContract" name="i" type="radio" value="pie">
+        Pie Chart
+    </label>
+    <label>
+        <input class="testTypeContract" name="i" type="radio" value="doughnut">
+        Doughnut Chart
+    </label>
+    <label>
+        <input class="testTypeContract" name="i" type="radio" value="line">
+        Line Chart
+    </label>
+
+    <div>
+        <div>
+
+            <canvas id="chartcanvas-typeContract"></canvas>
+        </div>
+
+
+
+    </div>
+    <script>
+
+
+
+
+        var ctxInsurance = $("#chartcanvas-insurance");
+        var ctxClasse = $("#chartcanvas-classe");
+        var ctxTypeContract = $("#chartcanvas-typeContract");
+        var ctxAccidentYear = $("#chartcanvas-accident-year");
+        var ctxAccidentMonth17 = $("#chartcanvas-accident-month17");
+        var ctxAccidentMonth16 = $("#chartcanvas-accident-month16");
+
+
+
+        //options
+        var options = {
+            responsive: true,
+            title: {
+                display: true,
+                position: "top",
+                text: "Chart",
+                fontSize: 18,
+                fontColor: "#111"
+            },
+            legend: {
+                display: true,
+                position: "bottom",
+                labels: {
+                    fontColor: "#333",
+                    fontSize: 16
+                }
+            }
+        };
+        //----------------------------------------------------
+        //--------- Type Contract---------------------------------
+        //----------------------------------------------------
+        var repArrayTypeContract = @Html.Raw(Json.Encode(ViewBag.REPTypeContract));
+        var objectsTypeContract = @Html.Raw(Json.Encode(ViewBag.OBJECTSTypeContract));
+        //doughnut chart data
+        var dataTypeContract = {
+            labels: objectsTypeContract,
+            datasets: [
+                {
+                    label: objectsTypeContract,
+                    data: repArrayTypeContract,
+                    backgroundColor: [
+                        "#DEB887",
+                        "#A9A9A9",
+                        "#DC143C",
+                        "#F4A460",
+                        "#2E8B57"
+                    ],
+                    borderColor: [
+                        "#CDA776",
+                        "#989898",
+                        "#CB252B",
+                        "#E39371",
+                        "#1D7A46"
+                    ],
+                    borderWidth: [1, 1, 1, 1, 1]
+                }
+            ]
+        };
+
+        $('.testTypeContract').change(function() {
+            value = this.getAttribute('value');
+
+            if (value == 'bar') {
+                var x = "bar";
+            } else if (value == 'pie') {
+                var x = "pie";
+
+            }else if (value == 'doughnut') {
+                var x = "doughnut";
+
+            }else if (value == 'line') {
+                var x = "line";
+
+            }
+            var chart1 = new Chart(ctxTypeContract, {
+                type: x,
+                data: dataTypeContract,
+                options: options
+            });
+        });
+
+        $('.testTypeContract').first().prop('checked', true).trigger('change');
+    </script>
+
+</body>
+</html>
+

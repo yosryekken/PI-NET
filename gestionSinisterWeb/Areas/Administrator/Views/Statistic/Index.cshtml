@@ -1,0 +1,593 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Areas/Administrator/Views/Shared/_adminLayout.cshtml";
+}
+
+<h2>Dashboard</h2>
+<a href="@Url.Action("ExportPdf", "Statistic")" href="single-knowlegde-base.html">Export to PDF</a>
+
+<html>
+<head>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/Chart.min.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        #chart_container {
+            width: 400px;
+            height: 400px;
+            border: 1px solid #ddd;
+            padding: 1px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+
+
+    @* ---------------------------------------------------------------------------------------- *@
+    @*//------------insurance ------------------------------------------------------------------*@
+    @* ---------------------------------------------------------------------------------------- *@
+    <h3>Insurance Company</h3>
+    <label>
+        <input class="test" name="g" type="radio" value="bar">
+        Bar Chart
+    </label>
+    <label>
+        <input class="test" name="g" type="radio" value="pie">
+        Pie Chart
+    </label>
+    <label>
+        <input class="test" name="g" type="radio" value="doughnut">
+        Doughnut Chart
+    </label>
+    <label>
+        <input class="test" name="g" type="radio" value="line">
+        Line Chart
+    </label>
+
+    <div>
+        <div>
+
+            <canvas id="chartcanvas-insurance"></canvas>
+        </div>
+
+        @* ---------------------------------------------------------------------------------------- *@
+        @*//------------ accident ------------------------------------------------------------------*@
+        @* ---------------------------------------------------------------------------------------- *@
+        <h3>Rate of Car Accident</h3>
+
+        <label>
+            <input class="perriod" name="c" type="radio" value="year">
+            Per year
+        </label>
+        <label>
+            <input class="perriod" name="c" type="radio" value="month">
+            Per month
+        </label>
+
+        <div id="year">
+            <label>
+                <input class="testYear" name="x" type="radio" value="bar">
+                Bar Chart
+            </label>
+            <label>
+                <input class="testYear" name="x" type="radio" value="pie">
+                Pie Chart
+            </label>
+            <label>
+                <input class="testYear" name="x" type="radio" value="doughnut">
+                Doughnut Chart
+            </label>
+            <label>
+                <input class="testYear" name="x" type="radio" value="line">
+                Line Chart
+            </label>
+
+        </div>
+        <div id="month">
+            <div>
+                <label>
+                    <input class="year" name="d" type="radio" value="2017">
+                    Year 2017
+                </label>
+                <label>
+                    <input class="year" name="d" type="radio" value="2016">
+                    Year 2016
+                </label>
+
+            </div>
+            <div id="choiceChart">
+                <label>
+                    <input class="testMonth" name="e" type="radio" value="bar">
+                    Bar Chart
+                </label>
+                <label>
+                    <input class="testMonth" name="e" type="radio" value="pie">
+                    Pie Chart
+                </label>
+                <label>
+                    <input class="testMonth" name="e" type="radio" value="doughnut">
+                    Doughnut Chart
+                </label>
+                <label>
+                    <input class="testMonth" name="e" type="radio" value="line">
+                    Line Chart
+                </label>
+            </div>
+
+        </div>
+
+        <div id="canvasAccidentYear">
+
+            <canvas id="chartcanvas-accident-year"></canvas>
+        </div>
+        <div id="canvasAccidentMonth17">
+
+            <canvas id="chartcanvas-accident-month17"></canvas>
+        </div>
+        <div id="canvasAccidentMonth16">
+
+            <canvas id="chartcanvas-accident-month16"></canvas>
+        </div>
+
+
+        @* ---------------------------------------------------------------------------------------- *@
+        @*//------------ Classe-- ------------------------------------------------------------------*@
+        @* ---------------------------------------------------------------------------------------- *@
+
+        <h3>Amount of insured per Class</h3>
+        <label>
+            <input class="testClass" name="i" type="radio" value="bar">
+            Bar Chart
+        </label>
+        <label>
+            <input class="testClass" name="i" type="radio" value="pie">
+            Pie Chart
+        </label>
+        <label>
+            <input class="testClass" name="i" type="radio" value="doughnut">
+            Doughnut Chart
+        </label>
+        <label>
+            <input class="testClass" name="i" type="radio" value="line">
+            Line Chart
+        </label>
+
+        <div>
+            <div>
+
+                <canvas id="chartcanvas-classe"></canvas>
+            </div>
+
+            @* ---------------------------------------------------------------------------------------- *@
+            @*//------------ Type Contract-- ------------------------------------------------------------------*@
+            @* ---------------------------------------------------------------------------------------- *@
+
+            <h3>Amount of Type Contract</h3>
+            <label>
+                <input class="testTypeContract" name="i" type="radio" value="bar">
+                Bar Chart
+            </label>
+            <label>
+                <input class="testTypeContract" name="i" type="radio" value="pie">
+                Pie Chart
+            </label>
+            <label>
+                <input class="testTypeContract" name="i" type="radio" value="doughnut">
+                Doughnut Chart
+            </label>
+            <label>
+                <input class="testTypeContract" name="i" type="radio" value="line">
+                Line Chart
+            </label>
+
+            <div>
+                <div>
+
+                    <canvas id="chartcanvas-typeContract"></canvas>
+                </div>
+
+
+
+            </div>
+            <script>
+
+
+
+
+        var ctxInsurance = $("#chartcanvas-insurance");
+        var ctxClasse = $("#chartcanvas-classe");
+        var ctxTypeContract = $("#chartcanvas-typeContract");
+        var ctxAccidentYear = $("#chartcanvas-accident-year");
+        var ctxAccidentMonth17 = $("#chartcanvas-accident-month17");
+        var ctxAccidentMonth16 = $("#chartcanvas-accident-month16");
+
+
+
+        //options
+        var options = {
+            responsive: true,
+            title: {
+                display: true,
+                position: "top",
+                text: "Chart",
+                fontSize: 18,
+                fontColor: "#111"
+            },
+            legend: {
+                display: true,
+                position: "bottom",
+                labels: {
+                    fontColor: "#333",
+                    fontSize: 16
+                }
+            }
+        };
+        //----------------------------------------------------
+        //--------- insurance---------------------------------
+        //----------------------------------------------------
+        var repArray = @Html.Raw(Json.Encode(ViewBag.REP));
+        var objects = @Html.Raw(Json.Encode(ViewBag.OBJECTS));
+        //doughnut chart data
+        var dataInsurance = {
+            labels: objects,
+            datasets: [
+                {
+                    label: objects,
+                    data: repArray,
+                    backgroundColor: [
+                        "#DEB887",
+                        "#A9A9A9",
+                        "#DC143C",
+                        "#F4A460",
+                        "#2E8B57"
+                    ],
+                    borderColor: [
+                        "#CDA776",
+                        "#989898",
+                        "#CB252B",
+                        "#E39371",
+                        "#1D7A46"
+                    ],
+                    borderWidth: [1, 1, 1, 1, 1]
+                }
+            ]
+        };
+        $('.test').change(function() {
+            value = this.getAttribute('value');
+
+            if (value == 'bar') {
+                var x = "bar";
+            } else if (value == 'pie') {
+                var x = "pie";
+
+            }else if (value == 'doughnut') {
+                var x = "doughnut";
+
+            }else if (value == 'line') {
+                var x = "line";
+
+            }
+            var chart1 = new Chart(ctxInsurance, {
+                type: x,
+                data: dataInsurance,
+                options: options
+            });
+        });
+
+        $('.test').first().prop('checked', true).trigger('change');
+
+        //----------------------------------------------------
+        //--------- Classe---------------------------------
+        //----------------------------------------------------
+        var repArrayClasse = @Html.Raw(Json.Encode(ViewBag.REPContract));
+        var objectsClasse = @Html.Raw(Json.Encode(ViewBag.OBJECTSContract));
+        //doughnut chart data
+        var dataInsurance = {
+            labels: objectsClasse,
+            datasets: [
+                {
+                    label: objectsClasse,
+                    data: repArrayClasse,
+                    backgroundColor: [
+                        "#DEB887",
+                        "#A9A9A9",
+                        "#DC143C",
+                        "#F4A460",
+                        "#2E8B57"
+                    ],
+                    borderColor: [
+                        "#CDA776",
+                        "#989898",
+                        "#CB252B",
+                        "#E39371",
+                        "#1D7A46"
+                    ],
+                    borderWidth: [1, 1, 1, 1, 1]
+                }
+            ]
+        };
+        $('.testClass').change(function() {
+            value = this.getAttribute('value');
+
+            if (value == 'bar') {
+                var x = "bar";
+            } else if (value == 'pie') {
+                var x = "pie";
+
+            }else if (value == 'doughnut') {
+                var x = "doughnut";
+
+            }else if (value == 'line') {
+                var x = "line";
+
+            }
+            var chart1 = new Chart(ctxClasse, {
+                type: x,
+                data: dataInsurance,
+                options: options
+            });
+        });
+
+        $('.testClass').first().prop('checked', true).trigger('change');
+
+        //----------------------------------------------------
+        //--------- Type Contract---------------------------------
+        //----------------------------------------------------
+        var repArrayTypeContract = @Html.Raw(Json.Encode(ViewBag.REPTypeContract));
+        var objectsTypeContract = @Html.Raw(Json.Encode(ViewBag.OBJECTSTypeContract));
+        //doughnut chart data
+        var dataTypeContract = {
+            labels: objectsTypeContract,
+            datasets: [
+                {
+                    label: objectsTypeContract,
+                    data: repArrayTypeContract,
+                    backgroundColor: [
+                        "#DEB887",
+                        "#A9A9A9",
+                        "#DC143C",
+                        "#F4A460",
+                        "#2E8B57"
+                    ],
+                    borderColor: [
+                        "#CDA776",
+                        "#989898",
+                        "#CB252B",
+                        "#E39371",
+                        "#1D7A46"
+                    ],
+                    borderWidth: [1, 1, 1, 1, 1]
+                }
+            ]
+        };
+
+        $('.testTypeContract').change(function() {
+            value = this.getAttribute('value');
+
+            if (value == 'bar') {
+                var x = "bar";
+            } else if (value == 'pie') {
+                var x = "pie";
+
+            }else if (value == 'doughnut') {
+                var x = "doughnut";
+
+            }else if (value == 'line') {
+                var x = "line";
+
+            }
+            var chart1 = new Chart(ctxTypeContract, {
+                type: x,
+                data: dataTypeContract,
+                options: options
+            });
+        });
+
+        $('.testTypeContract').first().prop('checked', true).trigger('change');
+
+        //------------------------------------------------------------
+        //----------------- Accident ---------------------------------
+        //------------------------------------------------------------
+
+
+        //************** Year *************************
+        var repArrayAccidentYear = @Html.Raw(Json.Encode(ViewBag.repAccidentYear));
+        var objectsAccidentYear = @Html.Raw(Json.Encode(ViewBag.OBJECTSAccidentYear));
+
+        //data accident
+                var dataAccident = {
+                    labels: objectsAccidentYear,
+                    datasets: [
+                        {
+                            label: [
+                                "2017",
+                                "2016"
+                            ],
+                            data: [
+                                5,
+                                7
+                            ],
+                            backgroundColor: [
+                                "#DC143C",
+                                "#DEB887",
+                                "#A9A9A9",
+                        
+                                "#F4A460",
+                                "#2E8B57"
+                            ],
+                            borderColor: [
+                                "#CDA776",
+                                "#989898",
+                                "#CB252B",
+                                "#E39371",
+                                "#1D7A46"
+                            ],
+                            borderWidth: [1, 1, 1, 1, 1]
+                        }
+                    ]
+                };
+
+        $('.perriod').change(function() {
+            value = this.getAttribute('value');
+
+            if (value == 'month') {
+
+                $('#year').hide();
+                $('#month').show();
+                $('#chartcanvas-accident-year').hide();
+                $('#canvasAccidentMonth17').show();
+                $('#canvasAccidentMonth16').show();
+                $('#choiceChart').hide();
+            } else if (value == 'year') {
+                $('#month').hide();
+                $('#year').show();
+                $('#canvasAccidentMonth17').hide();
+                $('#canvasAccidentMonth16').hide();
+                $('#chartcanvas-accident-year').show();
+                $('#choiceChart').hide();
+                $('#chartcanvas-accident-month16').hide();
+                $('#chartcanvas-accident-month17').hide();
+            }
+        });
+        $('.perriod').first().prop('checked', true).trigger('change');
+
+
+        $('.testYear').change(function() {
+            value = this.getAttribute('value');
+
+            if (value == 'bar') {
+                var x = "bar";
+            } else if (value == 'pie') {
+                var x = "pie";
+
+            }else if (value == 'doughnut') {
+                var x = "doughnut";
+
+            }else if (value == 'line') {
+                var x = "line";
+
+            }
+            var chart1 = new Chart(ctxAccidentYear, {
+                type: x,
+                data: dataAccident,
+                options: options
+            });
+        });
+
+        $('.testYear').first().prop('checked', true).trigger('change');
+
+
+        //************** Month 2017 *************************
+
+        $('.year').change(function() {
+            value = this.getAttribute('value');
+
+            if (value == '2017') {
+                $('#chartcanvas-accident-month17').show();
+                $('#chartcanvas-accident-month16').hide();
+                $('#choiceChart').show();
+            } else if (value == '2016') {
+                $('#chartcanvas-accident-month16').show();
+                $('#chartcanvas-accident-month17').hide();
+                $('#choiceChart').show();
+            }
+
+        });
+
+        $('.year').first().prop('checked', true).trigger('change');
+
+        var repArrayAccidentMonth2017 = @Html.Raw(Json.Encode(ViewBag.REPAccidenMonth2017));
+        var objectsAccidentMonth2017 = @Html.Raw(Json.Encode(ViewBag.OBJECTSAccidentMonth2017));
+
+        var repArrayAccidentMonth2016 = @Html.Raw(Json.Encode(ViewBag.REPAccidenMonth2016));
+        var objectsAccidentMonth2016 = @Html.Raw(Json.Encode(ViewBag.OBJECTSAccidentMonth2016));
+
+        //data accident
+        var dataAccidentMonth17 = {
+            labels: objectsAccidentMonth2017,
+            datasets: [
+                {
+                    label: objectsAccidentMonth2017,
+                    data: repArrayAccidentMonth2017,
+                    backgroundColor: [
+                        "#DEB887",
+                        "#A9A9A9",
+                        "#DC143C",
+                        "#F4A460",
+                        "#2E8B57"
+                    ],
+                    borderColor: [
+                        "#CDA776",
+                        "#989898",
+                        "#CB252B",
+                        "#E39371",
+                        "#1D7A46"
+                    ],
+                    borderWidth: [1, 1, 1, 1, 1]
+                }
+            ]
+        };
+        var dataAccidentMonth16 = {
+            labels: objectsAccidentMonth2016,
+            datasets: [
+                {
+                    label: objectsAccidentMonth2016,
+                    data: repArrayAccidentMonth2016,
+                    backgroundColor: [
+                        "#DEB887",
+                        "#A9A9A9",
+                        "#DC143C",
+                        "#F4A460",
+                        "#2E8B57"
+                    ],
+                    borderColor: [
+                        "#CDA776",
+                        "#989898",
+                        "#CB252B",
+                        "#E39371",
+                        "#1D7A46"
+                    ],
+                    borderWidth: [1, 1, 1, 1, 1]
+                }
+            ]
+        };
+
+        $('.testMonth').change(function() {
+            value = this.getAttribute('value');
+
+            if (value == 'bar') {
+                var x = "bar";
+            } else if (value == 'pie') {
+                var x = "pie";
+
+            }else if (value == 'doughnut') {
+                var x = "doughnut";
+
+            }else if (value == 'line') {
+                var x = "line";
+
+            }
+            var chart2 = new Chart(ctxAccidentMonth17, {
+                type: x,
+                data: dataAccidentMonth17,
+                options: options
+            });
+            var chart3 = new Chart(ctxAccidentMonth16, {
+                type: x,
+                data: dataAccidentMonth16,
+                options: options
+            });
+        });
+
+        $('.testMonth').first().prop('checked', true).trigger('change');
+
+
+
+            </script>
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+﻿@model IEnumerable<Domain.entities.report>
+
+@{
+    ViewBag.Title = "Report";
+    Layout = "~/Areas/Administrator/Views/Shared/_adminLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+@using (Html.BeginForm())
+{
+    <table>
+        <tr>
+            <td>
+                <div> Serach by object : @Html.TextBox("SearchString")    </div>
+            </td>
+
+            <td>
+                <input type="submit" value="Search" id="submit" />
+            </td>
+        </tr>
+    </table>
+}
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<a href="@Url.Action("ExportPdf", "Report")" href="single-knowlegde-base.html">Download PDF</a>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.objet)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dateCreation)
+        </th>
+       
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.objet)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dateCreation)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                @*@Html.ActionLink(
+                "Delete",
+                "DeleteReport",
+                new { id = item.id },
+                new { onclick = "return confirm('Are you sure you wish to delete this report?');" })*@
+               
+            </td>
+        </tr>
+    }
+
+</table>
