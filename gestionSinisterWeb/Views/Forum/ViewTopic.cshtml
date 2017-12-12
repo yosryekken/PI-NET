@@ -1,0 +1,775 @@
+﻿@using WebApplication1.Models
+@using CodeKicker.BBCode;
+@using Insurance.Domaine.Entity
+@using WebApplication1.Controllers;
+@model IEnumerable<Insurance.Domaine.Entity.souscategory>
+
+@{
+    ViewBag.Title = "ViewForum";
+    Layout = null;
+
+    int idtopic = (int)ViewBag.idtopic;
+    List<topic> topics = (List<topic>)ViewBag.topic;
+    List<user> users = (List<user>)ViewBag.user;
+    List<favoris> favoriss = (List<favoris>)ViewBag.fav;
+    List<messages> messages = (List<messages>)ViewBag.message;
+   string vasy =ForumController.bbcode("[B]omar[/B]");
+        user currentUser = ForumController.currentuser;
+
+    
+}
+
+
+<html>
+
+<head>
+    <link rel="alternate" type="application/atom+xml" title="Feed - Gramziu Themes" href="feed.php" />
+    <link rel="alternate" type="application/atom+xml" title="Feed - New Topics" href="feed9d17.php?mode=topics" />
+    <link rel="apple-touch-icon-precomposed" href="styles/ariki/theme/images/apple-touch-icon-precomposed.gif">
+    <link rel="icon" href="styles/ariki/theme/images/favicon.gif" />
+    <link rel="icon" sizes="16x16" href="styles/ariki/theme/images/favicon.ico" />
+    <link href="~/Front/Forum/maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="screen, projection" />
+    <link href="~/Front/Forum/styles/ariki/theme/stylesheet6148.css" rel="stylesheet" type="text/css" media="screen, projection" />
+    <link href="~/Front/Forum/styles/ariki/theme/colours6148.css" rel="stylesheet" type="text/css" media="screen, projection" />
+    <script type="text/javascript" src="~/Front/jquery-3.2.0.min.js"></script>
+
+
+    <script>
+    $(document).ready(function () {
+        $('html, body').animate({
+            scrollTop: $("#@ViewBag.idRep").offset().top
+        }, 2000);
+    });
+    </script>
+
+
+    <script>
+
+    $(function() {
+        $('a[data-confirm]').click(function(ev) {
+            var h = $(this).attr('name');
+
+            $.ajax({
+                type: 'get',
+                dataType: 'json',
+                // url: Routing.generate('villes',{'idPays':$(this).val()}),
+                url: 'http://localhost:8888/Eshop/web/app_dev.php/like/'+h,
+                success: function (data) {
+                    // alert(data);
+
+                    $('a[name='+h+']').html('<img src="/Eshop/web/bundles/Forum/images/icon/'+data+'.png" width="50" height="40"/>');
+
+
+                }
+            });
+
+
+        });
+    });
+
+    </script>
+
+    <script>
+
+    $(function() {
+        $('a[supprimer]').click(function(ev) {
+            var h = $(this).attr('supprimer');
+
+            $.ajax({
+                type: 'POST',
+                data:{
+                    message:h
+                },
+                dataType: 'json',
+                // url: Routing.generate('villes',{'idPays':$(this).val()}),
+                url: 'http://localhost:8888/Eshop/web/app_dev.php/deleteMessage/'+h,
+                success: function (reponse) {
+                    $("#"+h).slideUp();
+
+
+                }
+            });
+
+
+        });
+    });
+
+    </script>
+
+
+    <script>
+    var TRange=null;
+
+    function findString (str) {
+        if (parseInt(navigator.appVersion)<4) return;
+        var strFound;
+        if (window.find) {
+
+            // CODE FOR BROWSERS THAT SUPPORT window.find
+
+            strFound=self.find(str);
+            if (!strFound) {
+                strFound=self.find(str,0,1)
+                while (self.find(str,0,1)) continue;
+            }
+        }
+
+
+        if (!strFound) alert ("String '"+str+"' not found!")
+        return;
+    }
+    </script>
+
+    </head>
+
+
+
+
+<body id="phpbb" class="nojs notouch section-index ltr  " style="background-color: #eaecf0">
+    <table style="background-color: black; width: 100%">
+        <div class="row">
+
+            <tr>
+                <td style="padding-left: 20px;">
+                    <img src="~/Front/Forum/images/logo.png" style="height: 20px; padding-left: 10px; margin-top: 5px">
+
+                </td>
+                <td>
+                    <img src="~/Front/Forum/images/black.png" style="height: 20px; padding-left: 80px; margin-top: 5px">
+
+                </td>
+
+                <td>
+                    <img src="~/Front/Forum/images/social.png " style="height: 30px ; margin-top: 5px">
+
+                </td>
+                <td>
+                    <img src="~/Front/Forum/images/black.png" style="height: 20px; padding-left: 60px; margin-top: 5px">
+
+                </td>
+
+                @if (currentUser.id == 0)
+                {
+
+
+
+                    <td style="width: 2px">
+                        <img src="~/Front/Forum/images/m.png" style="height: 15px ">
+
+                    </td>
+
+                    <td class="top-bar">
+                        <ul class="tools">
+                            <li>
+                                <a href="~/Forum/Login">
+                                    <span class="hidden-md" style="font-size: 10px">Se connecter!</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </td>
+                }
+                else
+                {
+                    <td class="top-bar">
+                        <ul class="tools">
+                            <li>
+                                <a href="#">
+                                    <span class="hidden-md" style="font-size: 10px">Bonjour,@currentUser.login</span>
+
+                                </a>
+                                |
+                                <a href="@Url.Action("Logout")">
+                                    <span class="hidden-md" style="font-size: 10px">LogOut</span>
+
+                                </a>
+                            </li>
+                        </ul>
+                    </td>
+                }
+
+
+
+            </tr>
+        </div>
+    </table>
+
+    <div id="overall-wrap">
+
+
+
+        <div id="wrap-body">
+            <div class="chunk">
+
+                <div class="wrap-subhead-main">
+
+                    <ul id="breadcrumbs-main" role="menubar">
+
+                        <li class="font-icon responsive-menu dropdown-container" data-skip-responsive="true" style="margin-top:10px">
+                            <a href="#" class="responsive-menu-link dropdown-trigger dropdown-toggle">
+                                <i class="fa fa-bars"></i>
+                            </a>
+                            <div class="dropdown hidden">
+                                <div class="pointer">
+                                    <div class="pointer-inner"></div>
+                                </div>
+                                <ul class="dropdown-contents" role="menu">
+
+                                    <li class="separator"></li>
+                                    <li class="font-icon icon-search-unanswered">
+                                        <a href="./search.php?style=3&amp;search_id=unanswered" role="menuitem">
+                                            <i class="fa fa-file-o"></i>Unanswered posts
+                                        </a>
+                                    </li>
+                                    <li class="font-icon icon-search-active">
+                                        <a href="./search.php?style=3&amp;search_id=active_topics" role="menuitem">
+                                            <i class="fa fa-fire"></i>Active topics
+                                        </a>
+                                    </li>
+                                    <li class="separator site-menu"></li>
+
+                                    <li data-skip-responsive="true" class="site-menu">
+                                        <a href="./faq.php?style=3" rel="help"
+                                           title="Frequently Asked Questions">FAQ</a>
+                                    </li>
+                                    <li class="site-menu">
+                                        <a href="#" title="Example"></a>
+
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="breadcrumbs rightside">
+                            <span class="crumb">
+                                <a href="~/Forum/First" accesskey="h" itemtype=""
+                                   itemscope="" data-navbar-reference="index" title="Board index">
+                                    <i class="fa fa-home"></i><span>Forum  </span>
+                                </a>»
+                            </span>
+                        </li>
+
+                        <li class="breadcrumbs rightside">
+                            <span class="crumb">
+                                @{ string redirect = "";}
+                                @foreach (var top in topics)
+                                {
+                                    if (top.idTopic == idtopic)
+                                    {
+                                        redirect = "http://localhost:3604/Forum/ViewForum/" + top.souscategory.category.idCategory;
+                                    }
+                                }
+                                <a href="@redirect" accesskey="h"
+                                   itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""
+                                   data-navbar-reference="index" title="Board index">
+                                    <i class="fa fa-home"></i><span>Sous Categories</span>
+                                </a>»
+                            </span>
+                        </li>
+                        <li class="breadcrumbs rightside">
+                            
+
+                               
+
+                               
+                            @{string redirect2 = "http://localhost:3604/Forum/ViewTopic/" + idtopic;}
+                                <span class="crumb">
+                                <a href="@redirect2"
+                                   accesskey="h" itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""
+                                   data-navbar-reference="index" title="Board index">
+                                    <i class="fa fa-home"></i><span>Topics</span>
+                                </a>
+                            </span>
+                        </li>
+                    </ul>
+
+
+                </div>
+                </br></br></br>
+
+
+                <div class="action-bar top">
+
+                    <div class="buttons">
+
+                        <a href=" {% for q in topic %}{{ path('Reply_post',{ 'categorie':q.idCategories.id,'souscategorie':q.idSousCategorie.id,'topic':q.id }) }}{% endfor %}"
+                           class="button font-icon" title="Post a reply">
+                            <i class="fa fa-reply"></i>Repondre
+                        </a>
+
+                    </div>
+
+
+
+                    <div class="search-box" role="search">
+                        <form method="get" id="topic-search" action="javascript:void();" onsubmit="if(this.t1.value!='')parent.findString(this.t1.value);return(false);">
+                            <fieldset>
+                                <input class="inputbox search" type="search" name="t1" id="t1" size="20"
+                                       placeholder="Rechercher dans ce sujet…" />
+                                <button class="button" type="submit" title="Search" onclick="" name="b1"><i class="fa fa-search"></i></button>
+                                <input type="hidden" name="t" value="2" />
+                                <input type="hidden" name="sf" value="msgonly" />
+                                <input type="hidden" name="style" value="3" />
+
+
+
+
+                            </fieldset>
+                        </form>
+                    </div>
+
+
+                    <div class="pagination">
+                        1 post
+                        &bull; Page <strong>1</strong> of <strong>1</strong>
+                    </div>
+
+
+                </div>
+
+
+                @foreach (var top in topics)
+                {
+                    if (top.idTopic == idtopic)
+                    {
+
+
+
+                <div id="p2" class="post has-profile bg2">
+                    <div class="inner">
+
+                        <dl class="postprofile" id="profile2">
+                            <dt class="has-profile-rank has-avatar">
+                                <div class="avatar-container">
+                                    <a href="./memberlist.php?style=3&amp;mode=viewprofile&amp;u=2" class="avatar">
+                                        <img class="avatar" src="~/Front/Forum/images/icon/avatar.png" width="80" height="80"
+                                             alt="User avatar" />
+                                    </a>
+                                </div>
+
+
+                                <a href="./memberlist.php?style=3&amp;mode=viewprofile&amp;u=2" style="color: #AA0000;"
+                                   class="username-coloured">@top.user.login</a>
+
+                            </dt>
+
+
+                            <dd class="profile-rank">@top.user.role</dd>
+                            @{int nbPost = 1;}
+                            @foreach (var j in messages)
+                            {
+                                if (j.user.id == top.user.id)
+                                {
+                                    nbPost = nbPost + 1;
+                                }
+                            }
+                                        
+                            <dd class="profile-posts">
+                                <strong>Posts:</strong> <a href="./search.php?style=3&amp;author_id=2&amp;sr=posts">@nbPost</a>
+                            </dd>
+                            @{string connected = "OrLigne";}
+                            @if (@top.user.Online == 1)
+                            {
+                                connected = "OnLigne";
+
+                            }
+   
+                            <dd class="profile-joined"><strong>Disponibilité:</strong>@connected</dd>
+
+
+
+                            <dd class="profile-contact">
+                                <strong>Contact:</strong>
+                                <a class="contact-icon contact-icon-pm"
+                                   href="./ucp.php?style=3&amp;i=pm&amp;mode=compose&amp;action=quotepost&amp;p=2"
+                                   title="Send private message">
+                                    Send private message
+                                </a>
+                            </dd>
+
+                        </dl>
+
+                        <hr class="divider" />
+                        <div class="postbody">
+                            <div id="post_content2">
+
+                                <h3 class="first">
+                                    <strong>Subject: </strong>
+                                    <a href="#p2">
+                                        @top.sujet 
+
+                                    </a>
+                                </h3>
+                                 
+                              
+
+                                <ul class="posts-buttons">
+                                    <li>
+                                        <a href="{{ path('Delete_Topic',{'topic':i.id}) }}" title="Supprimer">
+                                            <i class="fa fa-trash-o fa-lg"></i><span>Supprimer cette reponse</span>
+                                        </a>
+                                    </li>
+
+                                    @{ int nbfavoris = 0;}
+                                    @foreach (var favo in favoriss)
+                                    {
+
+
+
+
+
+                                        if ((favo.idTopic == top.idTopic) && (favo.idUser == currentUser.id))
+                                        {
+                                            nbfavoris = nbfavoris + 1;
+                                        }
+
+                                    }
+                                    @if (nbfavoris == 0)
+                                    {
+                                        <a href="@Url.Action("AddFavoris2", new { id=top.idTopic, iduser=currentUser.id })">
+
+                                            <img class="avatar" src="~/Front/Forum/images/icon/favempty.png" style="width:20px ;height:20px" alt="User avatar" />
+                                        </a>
+                                    }
+                                    @if (nbfavoris != 0)
+                                    {
+                                        <a href="@Url.Action("DeleteFavoris", new { id=top.idTopic, iduser=currentUser.id })">
+
+                                            <img class="avatar" src="~/Front/Forum/images/icon/fav.png" style="width:20px ;height:20px" alt="User avatar" />
+                                           </a>
+                                             }
+
+
+                                            <li>
+
+
+
+                                            </li>
+
+
+</ul>
+                               
+
+
+                                <p class="author">
+                                    <a href="./viewtopic.php?style=3&amp;p=2#p2">
+
+                                      Date:   <strong>@Convert.ToString(string.Format("{0:dd/MM/yyyy}", top.dateCreation))</strong>
+                                    </a>
+                                </p>
+
+
+                                <div class="content">
+
+                                    @{string cont = ForumController.bbcode(top.contenu)  ;
+
+
+                                        }
+
+
+                                   
+                                    @Html.Raw(cont)
+
+                                </div>
+
+                                @{ int nb = 0;}
+                                @foreach (var m in messages)
+                                {
+                                    if (m.topic.idTopic==idtopic)
+                                    {
+                                        nb =nb +(int)m.nbLike;
+                                    }
+                                }
+                                @{ string likee = "/Front/Forum/images/icon/"+nb+".png";}
+
+                                <div id="s2" class="signature">
+                                    <a type="submit">
+                                        <img src="@likee" width="50" height="40" />
+
+                                    </a>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+                <hr class="divider" />
+
+                                        }
+
+                                    }
+
+                @foreach (var msg in messages)
+                {
+                    if (msg.topic.idTopic == idtopic)
+                    {
+
+
+
+
+                <div id="@msg.idMessage" class="post has-profile bg2">
+                    <div class="inner">
+
+                        <dl class="postprofile" id="profile2">
+                            <dt class="has-profile-rank has-avatar">
+                                <div class="avatar-container">
+                                    <a href="./memberlist.php?style=3&amp;mode=viewprofile&amp;u=2" class="avatar">
+                                        <img class="avatar" src="~/Front/Forum/images/icon/avatar.png"
+                                             width="80" height="80" alt="User avatar" />
+                                    </a>
+                                </div>
+
+
+                                <a href="./memberlist.php?style=3&amp;mode=viewprofile&amp;u=2" style="color: #AA0000;"
+                                   class="username-coloured">@msg.user.login</a>
+
+                            </dt>
+
+
+                            <dd class="profile-rank">@msg.user.role</dd>
+                            @{int nbPost2 = 1;}
+                            @foreach (var j in messages)
+                            {
+                                if (j.user.id == msg.user.id)
+                                {
+                                    nbPost2 = nbPost2 + 1;
+                                }
+                            }
+                           
+                            <dd class="profile-posts">
+                                <strong>Publication(s):</strong> <a href="./search.php?style=3&amp;author_id=2&amp;sr=posts">@nbPost2</a>
+                            </dd>
+                            @{string connected2 = "OrLigne";}
+                            @if (@msg.user.Online == 1)
+                            {
+                                connected2 = "OnLigne";
+
+                            }
+                            <dd class="profile-joined"><strong>Dérniére activité:</strong> @connected2</dd>
+
+
+                            <dd class="profile-contact">
+                                <strong>Contact:</strong>
+                                <a class="contact-icon contact-icon-pm"
+                                   href="./ucp.php?style=3&amp;i=pm&amp;mode=compose&amp;action=quotepost&amp;p=2"
+                                   title="Send private message">
+                                    Envoyé un message privé
+                                </a>
+                            </dd>
+
+                        </dl>
+
+                        <hr class="divider" />
+                        <div class="postbody">
+                            <div id="post_content2">
+
+                                <h3 class="first"><a href="#p2"><strong>Re:</strong>@msg.topic.sujet</a></h3>
+
+
+                                <ul class="posts-buttons">
+                                  
+                                    <li>
+                                        <a href="" title="Citer">
+                                            <i class="fa fa-quote-left" style="margin-top:10px"></i><span>Citation</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a type="submit" title="Supprimer" supprimer="@msg.idMessage" omar="@msg.idMessage">
+                                            <i class="fa fa-trash-o fa-lg" style="margin-top:10px"></i><span>Supprimer cette reponse</span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="" title="Modifier">
+                                            <i class="fa fa-cog fa-spin fa-3x fa-fw" style="margin-top:10px"></i><span>Modifier cette reponse</span>
+                                        </a>
+                                    </li>
+                                 
+                                </ul>
+
+
+                                <p class="author">
+                                    <a href="./viewtopic.php?style=3&amp;p=2#p2">
+                                        Date:   <strong>@Convert.ToString(string.Format("{0:dd/MM/yyyy}", msg.dateEdit))</strong>
+                                    </a>
+                                </p>
+
+
+                                <div class="content">
+                                    @{string cont2 = BBCode.ToHtml(msg.contenu);
+
+                                        var parser = new BBCodeParser(new[]
+                                        {
+                                       new BBTag("b", "<b>", "</b>"),
+
+
+                                            });
+                                    }
+
+
+                                    aa
+                                    @Html.Raw(cont2)
+                                </div>
+
+
+                                <div class="notice">
+                                    Derniére modification par 
+                                    <a href="./memberlist.php?style=3&amp;mode=viewprofile&amp;u=2" style="color: #AA0000;" class="username-coloured">
+                                    @msg.user.login
+                                    </a>
+                                 à
+                                    <strong>@Convert.ToString(string.Format("{0:dd/MM/yyyy}", msg.dateEdit))</strong>
+                               </div>
+
+
+
+
+
+
+
+
+
+                                
+
+                                <div id = "s2" class="signature">
+                                    <a type = "submit" data-confirm="@msg.idMessage" name="@msg.idMessage" href="@Url.Action("AddLike", new { id = msg.idMessage, iduser = currentUser.id })">
+                                        
+                                    @{string like = "/Front/Forum/images/icon/"+msg.nbLike+".png";}
+                                    <img src = "@like" width="50" height="40" />
+
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+                                            }
+                                        }
+                <hr class="divider" />
+
+                
+
+
+                <hr class="divider" />
+
+                <form method="post" action="">
+
+@using (Html.BeginForm("ViewTopic", "Forum", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+                    <div id="5" class="panel">
+                        <div class="inner">
+                            <h2 class="quickreply-title">Reponse rapide</h2>
+                            <fieldset class="fields1">
+                                <dl style="clear: left;">
+                                    <dt><label for="subject">Sujet:</label></dt>
+                                    <dd>
+                                        @{string sujet  = "";}
+                                        @foreach (var top in topics)
+                                        {
+                                            if (top.idTopic == idtopic)
+                                            {
+                                                sujet = top.sujet;
+                                            }
+                                        }
+
+                                        <input type="text" name="subject" id="subject" size="45" maxlength="124"
+                                               tabindex="2" value="Re: @sujet "
+                                               class="inputbox autowidth" />
+                                    </dd>
+                                </dl>
+                                <div id="message-box">
+                                    <textarea style="height: 9em;" id="message" name="message" rows="7" cols="76" tabindex="3"
+                                              class="inputbox" required></textarea>
+                                </div>
+                            </fieldset>
+                            <fieldset class="submit-buttons">
+                                <input type="hidden" name="creation_time" value="1491145990" />
+                                <input type="hidden" name="form_token" value="5dbd32eb18752d27194a5acc1586f20dd324e110" />
+
+                                <input type="hidden" name="topic_cur_post_id" value="2" />
+                                <input type="hidden" name="lastclick" value="1491145990" />
+                                <input type="hidden" name="topic_id" value="2" />
+                                <input type="hidden" name="forum_id" value="2" />
+                                <input type="hidden" name="attach_sig" value="1" />
+
+
+                                <a href="">
+                                    <input type="submit" tabindex="6"
+                                           value="Éditeur complet" class="button2" />
+                                </a>
+
+
+                                <a href="@Url.Action("ViewTopic", new {id = idtopic})">
+
+                                    <input type="submit" accesskey="s" tabindex="7" name="post" value="Submit" class="button1" />
+                               
+                             
+                            </fieldset>
+                        </div>
+                    </div>
+                                            }
+                </form>
+
+
+                <div class="action-bar bottom">
+                    <div class="buttons">
+
+                        <a href="{% for q in topic %}{{ path('Reply_post',{ 'categorie':q.idCategories.id,'souscategorie':q.idSousCategorie.id,'topic':q.id }) }}{% endfor %}" class="button font-icon"
+                           title="Post a reply">
+                            <i class="fa fa-reply"></i>Repondre
+                        </a>
+
+                    </div>
+
+
+
+                    <div class="pagination">
+                        1 post
+                        &bull; Page <strong>1</strong> of <strong>1</strong>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+
+
+                <p class="jumpbox-return">
+                    <a href="{{ path('afficher2',{'id':categories}) }}" accesskey="r">Return to “{{ sou.nom }}”</a>
+                </p>
+
+
+                <div class="stat-block online-list">
+                    <h3><a href="./viewonline.php?style=3">Meilleur Membre dans ce sujet ?</a></h3>
+                    <p>
+                        Users browsing this forum:
+                        <a href="~/Views/Forum/First" class="username">oualha</a>
+                    </p>
+                </div>
+
+            </div>
+
+
+            <script type="text/javascript" src="~/Front/Forum/assets/javascript/editor.js"></script>
+            <script type="text/javascript" src="~/Front/jquery-3.2.0.min.js"></script>
+
+            <script type="text/javascript" src="~/Front/Forum/styles/ariki/template/forum_fn.js?assets_version=174.js"></script>
+
+            <script type="text/javascript" src="~/Front/Forum/styles/ariki/template/ajax6148.js"></script>
+
+            <script type="text/javascript" src="~/Front/Forum/styles/ariki/template/chosen.jquery.min6148.js"></script>
+
+        </div>
+
+
+    </div>
+
+
+    </body>
+</html>

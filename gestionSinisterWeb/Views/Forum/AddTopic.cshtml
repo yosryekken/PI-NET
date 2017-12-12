@@ -1,0 +1,1361 @@
+﻿@using WebApplication1.Models
+@using Insurance.Domaine.Entity
+@using WebApplication1.Controllers
+@model IEnumerable<Insurance.Domaine.Entity.souscategory>
+
+@{
+    ViewBag.Title = "ViewForum";
+    Layout = null;
+
+
+    List<topic> topics = (List<topic>)ViewBag.topic;
+    List<user> users = (List<user>)ViewBag.user;
+    user currentUser = ForumController.currentuser;
+
+}
+
+
+<html>
+
+
+<head>
+    <link rel="alternate" type="application/atom+xml" title="Feed - Gramziu Themes" href="feed.php" />
+    <link rel="alternate" type="application/atom+xml" title="Feed - New Topics" href="feed9d17.php?mode=topics" />
+    <link rel="apple-touch-icon-precomposed" href="styles/ariki/theme/images/apple-touch-icon-precomposed.gif">
+    <link rel="icon" href="styles/ariki/theme/images/favicon.gif" />
+    <link rel="icon" sizes="16x16" href="styles/ariki/theme/images/favicon.ico" />
+    <link href="~/Front/Forum/maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="screen, projection" />
+    <link href="~/Front/Forum/styles/ariki/theme/stylesheet6148.css" rel="stylesheet" type="text/css" media="screen, projection" />
+    <link href="~/Front/Forum/styles/ariki/theme/colours6148.css" rel="stylesheet" type="text/css" media="screen, projection" />
+
+
+    <script>
+        var TRange=null;
+
+        function findString (str) {
+            if (parseInt(navigator.appVersion)<4) return;
+            var strFound;
+            if (window.find) {
+
+                // CODE FOR BROWSERS THAT SUPPORT window.find
+
+                strFound=self.find(str);
+                if (!strFound) {
+                    strFound=self.find(str,0,1)
+                    while (self.find(str,0,1)) continue;
+                }
+            }
+
+
+            if (!strFound) alert ("String '"+str+"' not found!")
+            return;
+        }
+    </script>
+
+</head>
+
+<body id="phpbb" class="nojs notouch section-index ltr  " style="background-color: #eaecf0">
+    <table style="background-color: black; width: 100%">
+        <div class="row">
+
+            <tr>
+                <td style="padding-left: 20px;">
+                    <img src="~/Front/Forum/images/logo.png" style="height: 20px; padding-left: 10px; margin-top: 5px">
+
+                </td>
+                <td>
+                    <img src="~/Front/Forum/images/black.png" style="height: 20px; padding-left: 80px; margin-top: 5px">
+
+                </td>
+
+                <td>
+                    <img src="~/Front/Forum/images/social.png " style="height: 30px ; margin-top: 5px">
+
+                </td>
+                <td>
+                    <img src="~/Front/Forum/images/black.png" style="height: 20px; padding-left: 60px; margin-top: 5px">
+
+                </td>
+
+                @if (currentUser.id == 0)
+                {
+
+
+
+                    <td style="width: 2px">
+                        <img src="~/Front/Forum/images/m.png" style="height: 15px ">
+
+                    </td>
+
+                    <td class="top-bar">
+                        <ul class="tools">
+                            <li>
+                                <a href="~/Forum/Login">
+                                    <span class="hidden-md" style="font-size: 10px">Se connecter!</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </td>
+                }
+                else
+                {
+                    <td class="top-bar">
+                        <ul class="tools">
+                            <li>
+                                <a href="#">
+                                    <span class="hidden-md" style="font-size: 10px">Bonjour,@currentUser.login</span>
+
+                                </a>
+                                |
+                                <a href="@Url.Action("Logout")">
+                                    <span class="hidden-md" style="font-size: 10px">LogOut</span>
+
+                                </a>
+                            </li>
+                        </ul>
+                    </td>
+                }
+
+
+
+            </tr>
+        </div>
+    </table>
+
+
+    <div id="overall-wrap">
+
+
+        <div id="wrap-body">
+            <div class="chunk">
+                <div class="wrap-subhead-main">
+
+                    <ul id="breadcrumbs-main" role="menubar">
+
+                        <li class="font-icon responsive-menu dropdown-container" data-skip-responsive="true">
+                            <a href="#" class="responsive-menu-link dropdown-trigger dropdown-toggle">
+                                <i class="fa fa-bars"></i>
+                            </a>
+                            <div class="dropdown hidden">
+                                <div class="pointer">
+                                    <div class="pointer-inner"></div>
+                                </div>
+                                <ul class="dropdown-contents" role="menu">
+
+                                    <li class="separator"></li>
+                                    <li class="font-icon icon-search-unanswered">
+                                        <a href="./search.php?style=3&amp;search_id=unanswered" role="menuitem">
+                                            <i class="fa fa-file-o"></i>Unanswered posts
+                                        </a>
+                                    </li>
+                                    <li class="font-icon icon-search-active">
+                                        <a href="./search.php?style=3&amp;search_id=active_topics" role="menuitem">
+                                            <i class="fa fa-fire"></i>Active topics
+                                        </a>
+                                    </li>
+                                    <li class="separator site-menu"></li>
+
+                                    <li data-skip-responsive="true" class="site-menu">
+                                        <a href="./faq.php?style=3" rel="help"
+                                           title="Frequently Asked Questions">FAQ</a>
+                                    </li>
+                                    <li class="site-menu">
+                                        <a href="#" title="Example">Drop Down</a>
+                                        <ul>
+                                            <li><a href="#">Lorem ipsum</a></li>
+                                            <li><a href="#">Welcome to phpBB3</a></li>
+                                            <li><a href="#">Frequently Asked Questions</a></li>
+                                            <li><a href="#">BBCode example</a></li>
+                                        </ul>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="breadcrumbs rightside">
+                            <span class="crumb">
+                                <a href=" path('list_categorie" accesskey="h" itemtype="" itemscope="" data-navbar-reference="index" title="Board index"><i class="fa fa-home"></i><span>Forum  </span></a>»</span>
+                    </li>
+
+                    <li class="breadcrumbs rightside">
+                        <span class="crumb">
+                            <a href="{{ path('afficher2',{'id':categories}) }}" accesskey="h"
+                                   itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""
+                                   data-navbar-reference="index" title="Board index">
+                                    <i class="fa fa-home"></i><span>Sous Categories</span>
+                                </a>»
+                            </span>
+                        </li>
+                        <li class="breadcrumbs rightside">
+                            <span class="crumb">
+                                <a href="{{ path('add_topic',{'id':categories}) }}" accesskey="h"
+                                   itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""
+                                   data-navbar-reference="index" title="Board index">
+                                    <i class="fa fa-home"></i><span>Nouveau Sujets</span>
+                                </a>
+                            </span>
+
+                        </li>
+                    </ul>
+
+
+                </div>
+                </br></br></br>
+                <form id="postform" method="post" action="" enctype="multipart/form-data">
+
+
+                    @using (Html.BeginForm("AddTopic", "Forum", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+
+
+                        <div class="panel" id="postingbox">
+                            <div class="inner">
+
+                                <h3>Ajouter un nouveau sujet!</h3>
+
+                                <fieldset class="fields1">
+
+                                    <dl style="clear: left;">
+
+                                        <dt><label for="subject">Sous Categorie:</label></dt>
+                                        <dd>
+                                            <input list="bieres" type="text" value="" name="subject1" id="subject"
+                                                   size="45" maxlength="120" tabindex="2" value="" class="inputbox autowidth" />
+                                            <datalist id="bieres">
+
+
+                                                @foreach (var item in Model)
+                                                {
+                                                    <option value="@item.Name" />
+                                                }
+
+
+
+                                            </datalist>
+
+                                        </dd>
+                                    </dl>
+
+                                    <dl>
+                                        <dt><label for="icon">Topic icon:</label></dt>
+                                        <dd>
+                                            <label for="icon">
+                                                <input type="radio" name="icon" id="icon" value="0"
+                                                       checked="checked" tabindex="1" /> None
+                                            </label>
+                                            <label for="icon-1">
+                                                <input type="radio" name="icon" id="icon-1" value="1"
+                                                       tabindex="1" />
+                                                <img src="~/Front/Forum/images/icon/fire.png" width="16"
+                                                     height="16" alt="misc/fire.gif" title="" />
+                                            </label> <label for="icon-5">
+                                                <input type="radio" name="icon" id="icon-5" value="5"
+                                                       tabindex="1" />
+                                                <img src="~/Front/Forum/images/icon/Infobox_info_icon.svg.png" width="16"
+                                                     height="16" alt="misc/star.gif" title="" />
+                                            </label> <label for="icon-6">
+                                                <input type="radio" name="icon" id="icon-6" value="6"
+                                                       tabindex="1" />
+                                                <img src="~/Front/Forum/images/icon/KTnXg86qc.jpg"
+                                                     width="16" height="16" alt="misc/radioactive.gif" title="" />
+                                            </label> <label for="icon-4">
+                                                <input type="radio" name="icon" id="icon-4" value="4"
+                                                       tabindex="1" />
+                                                <img src="~/Front/Forum/images/icon/url-1.png" width="16"
+                                                     height="16" alt="misc/heart.gif" title="" />
+                                            </label> <label for="icon-7">
+                                                <input type="radio" name="icon" id="icon-7" value="7"
+                                                       tabindex="1" />
+                                                <img src="~/Front/Forum/images/icon/58317-200.png"
+                                                     width="16" height="16" alt="misc/thinking.gif" title="" />
+                                            </label> <label for="icon-9">
+                                                <input type="radio" name="icon" id="icon-9" value="9"
+                                                       tabindex="1" />
+                                                <img src="~/Front/Forum/images/icon/alert-storm-warning-weather-icon--icon-search-engine-0.png"
+                                                     width="16" height="16" alt="smile/question.gif" title="" />
+                                            </label> <label for="icon-10">
+                                                <input type="radio" name="icon" id="icon-10" value="10"
+                                                       tabindex="1" />
+                                                <img src="~/Front/Forum/images/icon/450.png" width="16"
+                                                     height="16" alt="smile/alert.gif" title="" />
+                                            </label> <label for="icon-8">
+                                                <input type="radio" name="icon" id="icon-8" value="8"
+                                                       tabindex="1" />
+                                                <img src="~/Front/Forum/images/icon/url.png" width="16"
+                                                     height="16" alt="smile/info.gif" title="" />
+                                            </label> <label for="icon-2">
+                                                <input type="radio" name="icon" id="icon-2" value="2"
+                                                       tabindex="1" />
+                                                <img src="~/Front/Forum/images/icon/mrgreen.jpg"
+                                                     width="16" height="16" alt="smile/redface.gif" title="" />
+                                            </label> <label for="icon-3">
+                                                <input type="radio" name="icon" id="icon-3" value="3"
+                                                       tabindex="1" />
+                                                <img src="~/Front/Forum/images/icon/Heart_icon_red_hollow.svg.png"
+                                                     width="16" height="16" alt="smile/mrgreen.gif" title="" />
+                                            </label>
+                                        </dd>
+                                    </dl>
+
+
+                                    <dl style="clear: left;">
+                                        <dt><label for="subject">Sujet:</label></dt>
+                                        <dd>
+                                            <input type="text" name="subject" id="subject" size="45" maxlength="120"
+                                                   tabindex="2" value="" class="inputbox autowidth" required />
+                                        </dd>
+                                    </dl>
+
+
+                                    <div id="smiley-box">
+
+
+                                        <strong>Smilies</strong><br />
+                                        <a href="#" onclick="insert_text(':D', true); return false;">
+                                            <img src="~/Front/Forum/images/smilies/icon_e_biggrin.gif"
+                                                 width="15" height="17" alt=":D" title="Very Happy" />
+                                        </a>
+                                        <a href="#" onclick="insert_text(':)', true); return false;">
+                                            <img src="~/Front/Forum/images/smilies/icon_e_smile.gif"
+                                                 width="15" height="17" alt=":)" title="Smile" />
+                                        </a>
+                                        <a href="#" onclick="insert_text(';)', true); return false;">
+                                            <img src="~/Front/Forum/images/smilies/icon_e_wink.gif" width="15"
+                                                 height="17" alt=";)" title="Wink" />
+                                        </a>
+                                        <a href="#" onclick="insert_text(':(', true); return false;">
+                                            <img src="~/Front/Forum/images/smilies/icon_e_sad.gif" width="15"
+                                                 height="17" alt=":(" title="Sad" />
+                                        </a>
+                                        <a href="#" onclick="insert_text(':o', true); return false;">
+                                            <img src="~/Front/Forum/images/smilies/icon_e_surprised.gif"
+                                                 width="15" height="17" alt=":o" title="Surprised" />
+                                        </a>
+                                        <a href="#" onclick="insert_text(':shock:', true); return false;">
+                                            <img src="~/Front/Forum/images/smilies/icon_eek.gif" width="15"
+                                                 height="17" alt=":shock:" title="Shocked" />
+                                        </a>
+                                        <a href="#" onclick="insert_text(':?', true); return false;">
+                                            <img src="~/Front/Forum/images/smilies/icon_e_confused.gif"
+                                                 width="15" height="17" alt=":?" title="Confused" />
+                                        </a>
+                                        <a href="#" onclick="insert_text('8-)', true); return false;">
+                                            <img src="~/Front/Forum/images/smilies/icon_cool.gif" width="15"
+                                                 height="17" alt="8-)" title="Cool" />
+                                        </a>
+                                        <a href="#" onclick="insert_text(':lol:', true); return false;">
+                                            <img src="~/Front/Forum/images/smilies/icon_lol.gif" width="15"
+                                                 height="17" alt=":lol:" title="Laughing" />
+                                        </a>
+                                        <a href="#" onclick="insert_text(':x', true); return false;">
+                                            <img src="~/Front/Forum/images/smilies/icon_mad.gif" width="15"
+                                                 height="17" alt=":x" title="Mad" />
+                                        </a>
+                                        <a href="#" onclick="insert_text(':P', true); return false;">
+                                            <img src="~/Front/Forum/images/smilies/icon_razz.gif" width="15"
+                                                 height="17" alt=":P" title="Razz" />
+                                        </a>
+                                        <a href="#" onclick="insert_text(':oops:', true); return false;">
+                                            <img src="~/Front/Forum/images/smilies/icon_redface.gif"
+                                                 width="15" height="17" alt=":oops:" title="Embarrassed" />
+                                        </a>
+                                        <a href="#" onclick="insert_text(':cry:', true); return false;">
+                                            <img src="~/Front/Forum/images/smilies/icon_cry.gif" width="15"
+                                                 height="17" alt=":cry:" title="Crying or Very Sad" />
+                                        </a>
+                                        <a href="#" onclick="insert_text(':evil:', true); return false;">
+                                            <img src="~/Front/Forum/images/smilies/icon_evil.gif" width="15"
+                                                 height="17" alt=":evil:" title="Evil or Very Mad" />
+                                        </a>
+                                        <a href="#" onclick="insert_text(':twisted:', true); return false;">
+                                            <img src="~/Front/Forum/images/smilies/icon_twisted.gif"
+                                                 width="15" height="17" alt=":twisted:" title="Twisted Evil" />
+                                        </a>
+                                        <a href="#" onclick="insert_text(':roll:', true); return false;">
+                                            <img src="~/Front/Forum/images/smilies/icon_rolleyes.gif"
+                                                 width="15" height="17" alt=":roll:" title="Rolling Eyes" />
+                                        </a>
+                                        <a href="#" onclick="insert_text(':!:', true); return false;">
+                                            <img src="~/Front/Forum/images/smilies/icon_exclaim.gif"
+                                                 width="15" height="17" alt=":!:" title="Exclamation" />
+                                        </a>
+                                        <a href="#" onclick="insert_text(':?:', true); return false;">
+                                            <img src="~/Front/Forum/images/smilies/icon_question.gif"
+                                                 width="15" height="17" alt=":?:" title="Question" />
+                                        </a>
+                                        <a href="#" onclick="insert_text(':idea:', true); return false;">
+                                            <img src="~/Front/Forum/images/smilies/icon_idea.gif" width="15"
+                                                 height="17" alt=":idea:" title="Idea" />
+                                        </a>
+                                        <a href="#" onclick="insert_text(':arrow:', true); return false;">
+                                            <img src="~/Front/Forum/images/smilies/icon_arrow.gif" width="15"
+                                                 height="17" alt=":arrow:" title="Arrow" />
+                                        </a>
+                                        <a href="#" onclick="insert_text(':|', true); return false;">
+                                            <img src="~/Front/Forum/images/smilies/icon_neutral.gif"
+                                                 width="15" height="17" alt=":|" title="Neutral" />
+                                        </a>
+                                        <a href="#" onclick="insert_text(':mrgreen:', true); return false;">
+                                            <img src="~/Front/Forum/images/smilies/icon_mrgreen.gif"
+                                                 width="15" height="17" alt=":mrgreen:" title="Mr. Green" />
+                                        </a>
+                                        <a href="#" onclick="insert_text(':geek:', true); return false;">
+                                            <img src="~/Front/Forum/images/smilies/icon_e_geek.gif" width="17"
+                                                 height="17" alt=":geek:" title="Geek" />
+                                        </a>
+                                        <a href="#" onclick="insert_text(':ugeek:', true); return false;">
+                                            <img src="~/Front/Forum/images/smilies/icon_e_ugeek.gif"
+                                                 width="17" height="18" alt=":ugeek:" title="Uber Geek" />
+                                        </a>
+
+
+                                        <div class="bbcode-status">
+                                            <hr />
+                                            <a href="faq.php?style=3&amp;mode=bbcode">BBCode</a> is <em>ON</em><br />
+                                            [img] is <em>ON</em><br />
+                                            [flash] is <em>OFF</em><br />
+                                            [url] is <em>ON</em><br />
+                                            Smilies are <em>ON</em>
+                                        </div>
+
+
+                                    </div>
+
+
+                                    <script type="text/javascript">
+                                        // <![CDATA[
+                                        var form_name = 'postform';
+                                        var text_name = 'message';
+                                        var load_draft = false;
+                                        var upload = false;
+
+                                        // Define the bbCode tags
+                                        var bbcode = new Array();
+                                        var bbtags = new Array('[b]', '[/b]', '[i]', '[/i]', '[u]', '[/u]', '[quote]', '[/quote]', '[code]', '[/code]', '[list]', '[/list]', '[list=]', '[/list]', '[img]', '[/img]', '[url]', '[/url]', '[flash=]', '[/flash]', '[size=]', '[/size]', '[youtube]', '[/youtube]');
+                                        var imageTag = false;
+
+                                        // Helpline messages
+                                        var help_line = {
+                                            b: 'Bold text: [b]text[/b]',
+                                            i: 'Italic text: [i]text[/i]',
+                                            u: 'Underline text: [u]text[/u]',
+                                            q: 'Quote text: [quote]text[/quote]',
+                                            c: 'Code display: [code]code[/code]',
+                                            l: 'List: [list][*]text[/list]',
+                                            o: 'Ordered list: e.g. [list=1][*]First point[/list] or [list=a][*]Point a[/list]',
+                                            p: 'Insert image: [img]http://image_url[/img]',
+                                            w: 'Insert URL: [url]http://url[/url] or [url=http://url]URL text[/url]',
+                                            a: 'Inline uploaded attachment: [attachment=]filename.ext[/attachment]',
+                                            s: 'Font colour: [color=red]text[/color] or [color=#FF0000]text[/color]',
+                                            f: 'Font size: [size=85]small text[/size]',
+                                            y: 'List: Add list element',
+                                            d: 'Flash: [flash=width,height]http://url[/flash]'
+                                            , cb_22: 'Youtube: [youtube]https://www.youtube.com/watch?v=FlbqtwjIvR0[/youtube]'
+                                        }
+
+                                        function change_palette() {
+                                            phpbb.toggleDisplay('colour_palette');
+                                            e = document.getElementById('colour_palette');
+
+                                            if (e.style.display == 'block') {
+                                                document.getElementById('bbpalette').value = 'Hide font colour';
+                                            }
+                                            else {
+                                                document.getElementById('bbpalette').value = 'Font colour';
+                                            }
+                                        }
+                                        // ]]>
+                                    </script>
+
+                                    <div id="colour_palette" style="display: none;">
+                                        <dl style="clear: left;">
+                                            <dt><label>Font colour:</label></dt>
+                                            <dd id="color_palette_placeholder" data-orientation="h" data-height="12"
+                                                data-width="15" data-bbcode="true">
+                                                <table class="not-responsive colour-palette horizontal-palette"
+                                                       style="width: auto;">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="background-color: #000000; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="000000"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#000000" title="#000000"></a>
+                                                            </td>
+                                                            <td style="background-color: #000040; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="000040"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#000040" title="#000040"></a>
+                                                            </td>
+                                                            <td style="background-color: #000080; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="000080"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#000080" title="#000080"></a>
+                                                            </td>
+                                                            <td style="background-color: #0000BF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="0000BF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#0000BF" title="#0000BF"></a>
+                                                            </td>
+                                                            <td style="background-color: #0000FF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="0000FF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#0000FF" title="#0000FF"></a>
+                                                            </td>
+                                                            <td style="background-color: #004000; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="004000"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#004000" title="#004000"></a>
+                                                            </td>
+                                                            <td style="background-color: #004040; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="004040"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#004040" title="#004040"></a>
+                                                            </td>
+                                                            <td style="background-color: #004080; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="004080"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#004080" title="#004080"></a>
+                                                            </td>
+                                                            <td style="background-color: #0040BF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="0040BF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#0040BF" title="#0040BF"></a>
+                                                            </td>
+                                                            <td style="background-color: #0040FF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="0040FF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#0040FF" title="#0040FF"></a>
+                                                            </td>
+                                                            <td style="background-color: #008000; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="008000"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#008000" title="#008000"></a>
+                                                            </td>
+                                                            <td style="background-color: #008040; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="008040"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#008040" title="#008040"></a>
+                                                            </td>
+                                                            <td style="background-color: #008080; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="008080"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#008080" title="#008080"></a>
+                                                            </td>
+                                                            <td style="background-color: #0080BF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="0080BF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#0080BF" title="#0080BF"></a>
+                                                            </td>
+                                                            <td style="background-color: #0080FF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="0080FF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#0080FF" title="#0080FF"></a>
+                                                            </td>
+                                                            <td style="background-color: #00BF00; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="00BF00"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#00BF00" title="#00BF00"></a>
+                                                            </td>
+                                                            <td style="background-color: #00BF40; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="00BF40"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#00BF40" title="#00BF40"></a>
+                                                            </td>
+                                                            <td style="background-color: #00BF80; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="00BF80"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#00BF80" title="#00BF80"></a>
+                                                            </td>
+                                                            <td style="background-color: #00BFBF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="00BFBF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#00BFBF" title="#00BFBF"></a>
+                                                            </td>
+                                                            <td style="background-color: #00BFFF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="00BFFF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#00BFFF" title="#00BFFF"></a>
+                                                            </td>
+                                                            <td style="background-color: #00FF00; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="00FF00"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#00FF00" title="#00FF00"></a>
+                                                            </td>
+                                                            <td style="background-color: #00FF40; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="00FF40"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#00FF40" title="#00FF40"></a>
+                                                            </td>
+                                                            <td style="background-color: #00FF80; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="00FF80"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#00FF80" title="#00FF80"></a>
+                                                            </td>
+                                                            <td style="background-color: #00FFBF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="00FFBF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#00FFBF" title="#00FFBF"></a>
+                                                            </td>
+                                                            <td style="background-color: #00FFFF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="00FFFF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#00FFFF" title="#00FFFF"></a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="background-color: #400000; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="400000"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#400000" title="#400000"></a>
+                                                            </td>
+                                                            <td style="background-color: #400040; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="400040"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#400040" title="#400040"></a>
+                                                            </td>
+                                                            <td style="background-color: #400080; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="400080"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#400080" title="#400080"></a>
+                                                            </td>
+                                                            <td style="background-color: #4000BF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="4000BF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#4000BF" title="#4000BF"></a>
+                                                            </td>
+                                                            <td style="background-color: #4000FF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="4000FF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#4000FF" title="#4000FF"></a>
+                                                            </td>
+                                                            <td style="background-color: #404000; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="404000"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#404000" title="#404000"></a>
+                                                            </td>
+                                                            <td style="background-color: #404040; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="404040"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#404040" title="#404040"></a>
+                                                            </td>
+                                                            <td style="background-color: #404080; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="404080"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#404080" title="#404080"></a>
+                                                            </td>
+                                                            <td style="background-color: #4040BF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="4040BF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#4040BF" title="#4040BF"></a>
+                                                            </td>
+                                                            <td style="background-color: #4040FF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="4040FF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#4040FF" title="#4040FF"></a>
+                                                            </td>
+                                                            <td style="background-color: #408000; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="408000"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#408000" title="#408000"></a>
+                                                            </td>
+                                                            <td style="background-color: #408040; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="408040"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#408040" title="#408040"></a>
+                                                            </td>
+                                                            <td style="background-color: #408080; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="408080"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#408080" title="#408080"></a>
+                                                            </td>
+                                                            <td style="background-color: #4080BF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="4080BF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#4080BF" title="#4080BF"></a>
+                                                            </td>
+                                                            <td style="background-color: #4080FF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="4080FF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#4080FF" title="#4080FF"></a>
+                                                            </td>
+                                                            <td style="background-color: #40BF00; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="40BF00"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#40BF00" title="#40BF00"></a>
+                                                            </td>
+                                                            <td style="background-color: #40BF40; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="40BF40"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#40BF40" title="#40BF40"></a>
+                                                            </td>
+                                                            <td style="background-color: #40BF80; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="40BF80"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#40BF80" title="#40BF80"></a>
+                                                            </td>
+                                                            <td style="background-color: #40BFBF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="40BFBF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#40BFBF" title="#40BFBF"></a>
+                                                            </td>
+                                                            <td style="background-color: #40BFFF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="40BFFF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#40BFFF" title="#40BFFF"></a>
+                                                            </td>
+                                                            <td style="background-color: #40FF00; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="40FF00"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#40FF00" title="#40FF00"></a>
+                                                            </td>
+                                                            <td style="background-color: #40FF40; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="40FF40"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#40FF40" title="#40FF40"></a>
+                                                            </td>
+                                                            <td style="background-color: #40FF80; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="40FF80"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#40FF80" title="#40FF80"></a>
+                                                            </td>
+                                                            <td style="background-color: #40FFBF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="40FFBF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#40FFBF" title="#40FFBF"></a>
+                                                            </td>
+                                                            <td style="background-color: #40FFFF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="40FFFF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#40FFFF" title="#40FFFF"></a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="background-color: #800000; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="800000"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#800000" title="#800000"></a>
+                                                            </td>
+                                                            <td style="background-color: #800040; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="800040"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#800040" title="#800040"></a>
+                                                            </td>
+                                                            <td style="background-color: #800080; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="800080"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#800080" title="#800080"></a>
+                                                            </td>
+                                                            <td style="background-color: #8000BF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="8000BF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#8000BF" title="#8000BF"></a>
+                                                            </td>
+                                                            <td style="background-color: #8000FF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="8000FF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#8000FF" title="#8000FF"></a>
+                                                            </td>
+                                                            <td style="background-color: #804000; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="804000"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#804000" title="#804000"></a>
+                                                            </td>
+                                                            <td style="background-color: #804040; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="804040"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#804040" title="#804040"></a>
+                                                            </td>
+                                                            <td style="background-color: #804080; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="804080"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#804080" title="#804080"></a>
+                                                            </td>
+                                                            <td style="background-color: #8040BF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="8040BF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#8040BF" title="#8040BF"></a>
+                                                            </td>
+                                                            <td style="background-color: #8040FF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="8040FF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#8040FF" title="#8040FF"></a>
+                                                            </td>
+                                                            <td style="background-color: #808000; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="808000"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#808000" title="#808000"></a>
+                                                            </td>
+                                                            <td style="background-color: #808040; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="808040"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#808040" title="#808040"></a>
+                                                            </td>
+                                                            <td style="background-color: #808080; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="808080"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#808080" title="#808080"></a>
+                                                            </td>
+                                                            <td style="background-color: #8080BF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="8080BF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#8080BF" title="#8080BF"></a>
+                                                            </td>
+                                                            <td style="background-color: #8080FF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="8080FF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#8080FF" title="#8080FF"></a>
+                                                            </td>
+                                                            <td style="background-color: #80BF00; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="80BF00"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#80BF00" title="#80BF00"></a>
+                                                            </td>
+                                                            <td style="background-color: #80BF40; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="80BF40"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#80BF40" title="#80BF40"></a>
+                                                            </td>
+                                                            <td style="background-color: #80BF80; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="80BF80"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#80BF80" title="#80BF80"></a>
+                                                            </td>
+                                                            <td style="background-color: #80BFBF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="80BFBF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#80BFBF" title="#80BFBF"></a>
+                                                            </td>
+                                                            <td style="background-color: #80BFFF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="80BFFF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#80BFFF" title="#80BFFF"></a>
+                                                            </td>
+                                                            <td style="background-color: #80FF00; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="80FF00"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#80FF00" title="#80FF00"></a>
+                                                            </td>
+                                                            <td style="background-color: #80FF40; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="80FF40"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#80FF40" title="#80FF40"></a>
+                                                            </td>
+                                                            <td style="background-color: #80FF80; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="80FF80"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#80FF80" title="#80FF80"></a>
+                                                            </td>
+                                                            <td style="background-color: #80FFBF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="80FFBF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#80FFBF" title="#80FFBF"></a>
+                                                            </td>
+                                                            <td style="background-color: #80FFFF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="80FFFF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#80FFFF" title="#80FFFF"></a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="background-color: #BF0000; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="BF0000"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#BF0000" title="#BF0000"></a>
+                                                            </td>
+                                                            <td style="background-color: #BF0040; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="BF0040"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#BF0040" title="#BF0040"></a>
+                                                            </td>
+                                                            <td style="background-color: #BF0080; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="BF0080"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#BF0080" title="#BF0080"></a>
+                                                            </td>
+                                                            <td style="background-color: #BF00BF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="BF00BF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#BF00BF" title="#BF00BF"></a>
+                                                            </td>
+                                                            <td style="background-color: #BF00FF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="BF00FF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#BF00FF" title="#BF00FF"></a>
+                                                            </td>
+                                                            <td style="background-color: #BF4000; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="BF4000"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#BF4000" title="#BF4000"></a>
+                                                            </td>
+                                                            <td style="background-color: #BF4040; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="BF4040"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#BF4040" title="#BF4040"></a>
+                                                            </td>
+                                                            <td style="background-color: #BF4080; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="BF4080"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#BF4080" title="#BF4080"></a>
+                                                            </td>
+                                                            <td style="background-color: #BF40BF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="BF40BF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#BF40BF" title="#BF40BF"></a>
+                                                            </td>
+                                                            <td style="background-color: #BF40FF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="BF40FF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#BF40FF" title="#BF40FF"></a>
+                                                            </td>
+                                                            <td style="background-color: #BF8000; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="BF8000"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#BF8000" title="#BF8000"></a>
+                                                            </td>
+                                                            <td style="background-color: #BF8040; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="BF8040"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#BF8040" title="#BF8040"></a>
+                                                            </td>
+                                                            <td style="background-color: #BF8080; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="BF8080"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#BF8080" title="#BF8080"></a>
+                                                            </td>
+                                                            <td style="background-color: #BF80BF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="BF80BF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#BF80BF" title="#BF80BF"></a>
+                                                            </td>
+                                                            <td style="background-color: #BF80FF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="BF80FF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#BF80FF" title="#BF80FF"></a>
+                                                            </td>
+                                                            <td style="background-color: #BFBF00; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="BFBF00"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#BFBF00" title="#BFBF00"></a>
+                                                            </td>
+                                                            <td style="background-color: #BFBF40; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="BFBF40"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#BFBF40" title="#BFBF40"></a>
+                                                            </td>
+                                                            <td style="background-color: #BFBF80; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="BFBF80"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#BFBF80" title="#BFBF80"></a>
+                                                            </td>
+                                                            <td style="background-color: #BFBFBF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="BFBFBF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#BFBFBF" title="#BFBFBF"></a>
+                                                            </td>
+                                                            <td style="background-color: #BFBFFF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="BFBFFF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#BFBFFF" title="#BFBFFF"></a>
+                                                            </td>
+                                                            <td style="background-color: #BFFF00; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="BFFF00"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#BFFF00" title="#BFFF00"></a>
+                                                            </td>
+                                                            <td style="background-color: #BFFF40; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="BFFF40"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#BFFF40" title="#BFFF40"></a>
+                                                            </td>
+                                                            <td style="background-color: #BFFF80; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="BFFF80"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#BFFF80" title="#BFFF80"></a>
+                                                            </td>
+                                                            <td style="background-color: #BFFFBF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="BFFFBF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#BFFFBF" title="#BFFFBF"></a>
+                                                            </td>
+                                                            <td style="background-color: #BFFFFF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="BFFFFF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#BFFFFF" title="#BFFFFF"></a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="background-color: #FF0000; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="FF0000"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#FF0000" title="#FF0000"></a>
+                                                            </td>
+                                                            <td style="background-color: #FF0040; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="FF0040"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#FF0040" title="#FF0040"></a>
+                                                            </td>
+                                                            <td style="background-color: #FF0080; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="FF0080"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#FF0080" title="#FF0080"></a>
+                                                            </td>
+                                                            <td style="background-color: #FF00BF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="FF00BF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#FF00BF" title="#FF00BF"></a>
+                                                            </td>
+                                                            <td style="background-color: #FF00FF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="FF00FF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#FF00FF" title="#FF00FF"></a>
+                                                            </td>
+                                                            <td style="background-color: #FF4000; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="FF4000"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#FF4000" title="#FF4000"></a>
+                                                            </td>
+                                                            <td style="background-color: #FF4040; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="FF4040"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#FF4040" title="#FF4040"></a>
+                                                            </td>
+                                                            <td style="background-color: #FF4080; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="FF4080"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#FF4080" title="#FF4080"></a>
+                                                            </td>
+                                                            <td style="background-color: #FF40BF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="FF40BF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#FF40BF" title="#FF40BF"></a>
+                                                            </td>
+                                                            <td style="background-color: #FF40FF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="FF40FF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#FF40FF" title="#FF40FF"></a>
+                                                            </td>
+                                                            <td style="background-color: #FF8000; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="FF8000"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#FF8000" title="#FF8000"></a>
+                                                            </td>
+                                                            <td style="background-color: #FF8040; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="FF8040"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#FF8040" title="#FF8040"></a>
+                                                            </td>
+                                                            <td style="background-color: #FF8080; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="FF8080"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#FF8080" title="#FF8080"></a>
+                                                            </td>
+                                                            <td style="background-color: #FF80BF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="FF80BF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#FF80BF" title="#FF80BF"></a>
+                                                            </td>
+                                                            <td style="background-color: #FF80FF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="FF80FF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#FF80FF" title="#FF80FF"></a>
+                                                            </td>
+                                                            <td style="background-color: #FFBF00; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="FFBF00"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#FFBF00" title="#FFBF00"></a>
+                                                            </td>
+                                                            <td style="background-color: #FFBF40; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="FFBF40"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#FFBF40" title="#FFBF40"></a>
+                                                            </td>
+                                                            <td style="background-color: #FFBF80; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="FFBF80"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#FFBF80" title="#FFBF80"></a>
+                                                            </td>
+                                                            <td style="background-color: #FFBFBF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="FFBFBF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#FFBFBF" title="#FFBFBF"></a>
+                                                            </td>
+                                                            <td style="background-color: #FFBFFF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="FFBFFF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#FFBFFF" title="#FFBFFF"></a>
+                                                            </td>
+                                                            <td style="background-color: #FFFF00; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="FFFF00"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#FFFF00" title="#FFFF00"></a>
+                                                            </td>
+                                                            <td style="background-color: #FFFF40; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="FFFF40"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#FFFF40" title="#FFFF40"></a>
+                                                            </td>
+                                                            <td style="background-color: #FFFF80; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="FFFF80"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#FFFF80" title="#FFFF80"></a>
+                                                            </td>
+                                                            <td style="background-color: #FFFFBF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="FFFFBF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#FFFFBF" title="#FFFFBF"></a>
+                                                            </td>
+                                                            <td style="background-color: #FFFFFF; width: 15px; height: 12px;">
+                                                                <a href="#" data-color="FFFFFF"
+                                                                   style="display: block; width: 15px; height: 12px; "
+                                                                   alt="#FFFFFF" title="#FFFFFF"></a>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </dd>
+                                        </dl>
+                                    </div>
+
+                                    <div id="format-buttons">
+                                        <input type="button" class="bbcode-b" accesskey="b"
+                                               name="addbbcode0" value="B" style="font-weight:bold;"
+                                               onclick="bbstyle(0)" title="Bold text: [b]text[/b]" /><input type="button" class="bbcode-i" accesskey="i" name="addbbcode2" value="i"
+                                                                                                            style="font-style:italic;" onclick="bbstyle(2)"
+                                                                                                            title="Italic text: [i]text[/i]" /><input type="button" class="bbcode-u"
+                                                                                                                                                      accesskey="u" name="addbbcode4"
+                                                                                                                                                      value="u"
+                                                                                                                                                      style="text-decoration: underline;"
+                                                                                                                                                      onclick="bbstyle(4)"
+                                                                                                                                                      title="Underline text: [u]text[/u]" /><input type="button" class="bbcode-quote" accesskey="q" name="addbbcode6" value="Quote"
+                                                                                                                                                                                                   onclick="bbstyle(6)" title="Quote text: [quote]text[/quote]" /><input type="button" class="bbcode-code" accesskey="c" name="addbbcode8" value="Code"
+                                                                                                                                                                                                                                                                         onclick="bbstyle(8)" title="Code display: [code]code[/code]" /><input type="button" class="bbcode-list" accesskey="l" name="addbbcode10" value="List"
+                                                                                                                                                                                                                                                                                                                                               onclick="bbstyle(10)" title="List: [list][*]text[/list]" /><input type="button"
+                                                                                                                                                                                                                                                                                                                                                                                                                 class="bbcode-list-"
+                                                                                                                                                                                                                                                                                                                                                                                                                 accesskey="o"
+                                                                                                                                                                                                                                                                                                                                                                                                                 name="addbbcode12"
+                                                                                                                                                                                                                                                                                                                                                                                                                 value="List="
+                                                                                                                                                                                                                                                                                                                                                                                                                 onclick="bbstyle(12)"
+                                                                                                                                                                                                                                                                                                                                                                                                                 title="Ordered list: e.g. [list=1][*]First point[/list] or [list=a][*]Point a[/list]" /><input type="button" class="bbcode-asterisk" accesskey="y" name="addlistitem"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                value="[*]" onclick="bbstyle(-1)" title="List item: [*]text" /><input type="button" class="bbcode-img" accesskey="p" name="addbbcode14" value="Img"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      onclick="bbstyle(14)" title="Insert image: [img]http://image_url[/img]" /><input type="button" class="bbcode-url" accesskey="w" name="addbbcode16" value="URL"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       style="text-decoration: underline;" onclick="bbstyle(16)"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       title="Insert URL: [url]http://url[/url] or [url=http://url]URL text[/url]" /><select name="addbbcode20" class="bbcode-size"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             onchange="bbfontstyle('[size=' + this.form.addbbcode20.options[this.form.addbbcode20.selectedIndex].value + ']', '[/size]');this.form.addbbcode20.selectedIndex = 2;"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             title="Font size: [size=85]small text[/size]">
+                                            <option value="50">Tiny</option>
+                                            <option value="85">Small</option>
+                                            <option value="100" selected="selected">Normal</option>
+                                            <option value="150">Large</option>
+                                            <option value="200">Huge</option>
+                                        </select>
+                                        <input type="button" class="bbcode-color" name="bbpalette" id="bbpalette"
+                                               value="Font colour" onclick="change_palette();"
+                                               title="Font colour: [color=red]text[/color] or [color=#FF0000]text[/color]" />
+                                        <input type="button" class="bbcode-youtube" name="addbbcode22" value="youtube"
+                                               onclick="bbstyle(22)"
+                                               title="Youtube: [youtube]https://www.youtube.com/watch?v=FlbqtwjIvR0[/youtube]" />
+                                    </div>
+
+
+                                    <div id="message-box">
+                                        <textarea required name="message" id="message" rows="15" cols="76" tabindex="4"
+                                                  onselect="storeCaret(this);" onclick="storeCaret(this);"
+                                                  onkeyup="storeCaret(this);" onfocus="initInsertions();"
+                                                  class="inputbox"></textarea>
+                                    </div>
+
+                                </fieldset>
+                                <input type="checkbox" name="check" id="check">Me notifier des reponses par mail.
+
+                            </div>
+                        </div>
+
+                        <div class="panel bg2">
+                            <div class="inner">
+                                <fieldset class="submit-buttons">
+
+                                    <input type="hidden" name="lastclick" value="1490975055" />
+
+
+                                    <input type="submit" tabindex="5" name="preview" value="Preview" class="button1"
+                                           onclick="document.getElementById('postform').action += '#preview';" />
+                                    <input type="submit" accesskey="s" tabindex="6" name="post" value="Submit"
+                                           class="button1 default-submit-action" />
+
+                                </fieldset>
+
+                            </div>
+                        </div>
+                        @ViewBag.Message
+
+                    }
+                </form>
+
+            </div>
+        </div>
+        {% block javascript %}
+
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script type="text/javascript">window.jQuery || document.write('\x3Cscript src="~/Front/Forum/assets/javascript/jquery.min6148.js">\x3C/script>');</script>
+        <script type="text/javascript" src="~/Front/Forum/assets/javascript/core6148.js"></script>
+
+        <script>
+            $(function () {
+                $("#st, #sd, #sk, #ch").chosen({
+                    disable_search: true,
+                    width: "auto"
+                });
+            });
+        </script>
+
+        <script>
+            $(function () {
+
+                var sidebarRecentPostDiv = document.getElementById("sidebar-recent-posts");
+
+                $.get('http://gramziu.pl/phpBB/feed.php', function (data) {
+                    $(data).find("entry").each(function (i) {
+                        var el = $(this);
+                        var entryWrap = document.createElement("div");
+
+                        var entryTitle = document.createElement("a");
+                        var entryAuthor = document.createElement("span");
+                        var entryContent = document.createElement("span");
+
+                        entryTitle.className = ("sidebar-recent-title");
+                        entryAuthor.className = ("sidebar-recent-author");
+                        entryContent.className = ("sidebar-recent-content");
+
+                        function cutText(name) {
+                            var elementText = el.find(name).text();
+
+                            if (name == "title") {
+                                elementText = elementText.substring(elementText.indexOf("•") + 2);
+                            } else if (name == "content") {
+                                elementText = elementText.replace(/(<([^>]+)>)/ig, "");
+                            }
+
+                            if (elementText.length > 50) {
+                                return elementText.substr(0, 50);
+                            } else {
+                                return elementText;
+                            }
+                            ;
+                        };
+
+                        entryTitle.textContent = cutText("title");
+                        entryAuthor.textContent = "by " + cutText("author");
+                        entryContent.textContent = cutText("content");
+                        entryURL = el.find("id").text();
+
+                        $(entryTitle).attr("href", entryURL);
+
+                        entryWrap.appendChild(entryTitle);
+                        entryWrap.appendChild(entryAuthor);
+                        entryWrap.appendChild(entryContent);
+
+                        sidebarRecentPostDiv.appendChild(entryWrap);
+
+                        if (++i >= 5) {
+                            return false;
+                        }
+                    });
+                });
+
+            });
+
+        </script>
+
+
+        <script type="text/javascript">
+            //<![CDATA[
+            phpbb.plupload = {
+                i18n: {
+                    'b': 'B',
+                    'kb': 'KB',
+                    'mb': 'MB',
+                    'gb': 'GB',
+                    'tb': 'TB',
+                    'Add Files': 'Add files',
+                    'Add files to the upload queue and click the start button.': 'Add files to the upload queue and click the start button.',
+                    'Close': 'Close',
+                    'Drag files here.': 'Drag files here.',
+                    'Duplicate file error.': 'Duplicate file error.',
+                    'File: %s': 'File: %s',
+                    'File: %s, size: %d, max file size: %d': 'File: %s, size: %d, max file size: %d',
+                    'File count error.': 'File count error.',
+                    'File extension error.': 'File extension error.',
+                    'File size error.': 'File size error.',
+                    'File too large:': 'File too large:',
+                    'Filename': 'Filename',
+                    'Generic error.': 'Generic error.',
+                    'HTTP Error.': 'HTTP error.',
+                    'Image format either wrong or not supported.': 'Image format either wrong or not supported.',
+                    'Init error.': 'Init error.',
+                    'IO error.': 'IO error.',
+                    'Invalid file extension:': 'Invalid file extension:',
+                    'N/A': 'N/A',
+                    'Runtime ran out of available memory.': 'Runtime ran out of available memory.',
+                    'Security error.': 'Security error.',
+                    'Select files': 'Select files',
+                    'Size': 'Size',
+                    'Start Upload': 'Start upload',
+                    'Start uploading queue': 'Start uploading queue',
+                    'Status': 'Status',
+                    'Stop Upload': 'Stop upload',
+                    'Stop current upload': 'Stop current upload',
+                    "Upload URL might be wrong or doesn't exist.": 'Upload URL might be wrong or does not exist.',
+                    'Uploaded %d/%d files': 'Uploaded %d/%d files',
+                    '%d files queued': '%d files queued',
+                    '%s already present in the queue.': '%s already present in the queue.'
+                },
+                config: {
+                    runtimes: 'html5',
+                    url: 'posting.php?style=3&mode=post&f=2',
+                    max_file_size: '262144b',
+                    chunk_size: '131072b',
+                    unique_names: true,
+                    filters: [{ title: 'Images', extensions: 'gif,png,jpeg,jpg,tif,tiff,tga' }, {
+                        title: 'Archives',
+                        extensions: 'gtar,gz,tar,zip,rar,ace,torrent,tgz,bz2,7z'
+                    }],
+
+                    headers: { 'X-PHPBB-USING-PLUPLOAD': '1', 'X-Requested-With': 'XMLHttpRequest' },
+                    file_data_name: 'fileupload',
+                    multipart_params: { 'add_file': 'Add the file' },
+                    form_hook: '#postform',
+                    browse_button: 'add_files',
+                    drop_element: 'message',
+                },
+                lang: {
+                    ERROR: 'Error',
+                    TOO_MANY_ATTACHMENTS: 'Cannot add another attachment, 3 is the maximum.',
+                },
+                order: 'desc',
+                maxFiles: 3,
+                data: [],
+            }
+            //]]>
+
+        </script>
+
+        <script type="text/javascript" src="~/Front/Forum/assets/javascript/editor.js"></script>
+
+        <script type="text/javascript"
+                src="~/Front/Forum/styles/ariki/template/forum_fn.js?assets_version=174.js"></script>
+
+        <script type="text/javascript" src="~/Front/Forum/styles/ariki/template/ajax6148.js"></script>
+
+        <script type="text/javascript"
+                src="~/Front/Forum/styles/ariki/template/chosen.jquery.min6148.js"></script>
+
+        <script type="text/javascript" src="~/Front/Forum/assets/plupload/plupload.full.min.js"></script>
+
+        <script type="text/javascript" src="~/Front/Forum/assets/javascript/plupload.js"></script>
+        <script type="text/javascript" src="~/Front/ckeditor/ckeditor.js"></script>
+        {% endblock %}
+
+    </div>
+    </body>
+</html>

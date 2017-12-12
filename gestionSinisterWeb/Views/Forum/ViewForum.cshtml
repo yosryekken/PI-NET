@@ -1,0 +1,400 @@
+﻿@using WebApplication1.Models
+@using Insurance.Domaine.Entity
+@using WebApplication1.Controllers
+@model IEnumerable<Insurance.Domaine.Entity.souscategory>
+
+@{
+    ViewBag.Title = "ViewForum";
+    Layout = null;
+
+    int idcategory = (int)ViewBag.idcategory;
+    List<topic> topics = (List<topic>)ViewBag.topic;
+    List<user> users = (List<user>)ViewBag.user;
+    List<favoris> favoriss = (List<favoris>)ViewBag.fav;
+    List<messages> messages = (List<messages>)ViewBag.message;
+    List<messages> lastpost = (List<messages>)ViewBag.lastpost;
+    user currentUser = ForumController.currentuser;
+
+
+}
+
+
+<html>
+
+
+<head>
+    <link rel="alternate" type="application/atom+xml" title="Feed - Gramziu Themes" href="feed.php" />
+    <link rel="alternate" type="application/atom+xml" title="Feed - New Topics" href="feed9d17.php?mode=topics" />
+    <link rel="apple-touch-icon-precomposed" href="styles/ariki/theme/images/apple-touch-icon-precomposed.gif">
+    <link rel="icon" href="styles/ariki/theme/images/favicon.gif" />
+    <link rel="icon" sizes="16x16" href="styles/ariki/theme/images/favicon.ico" />
+    <link href="~/Front/Forum/maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="screen, projection" />
+    <link href="~/Front/Forum/styles/ariki/theme/stylesheet6148.css" rel="stylesheet" type="text/css" media="screen, projection" />
+    <link href="~/Front/Forum/styles/ariki/theme/colours6148.css" rel="stylesheet" type="text/css" media="screen, projection" />
+
+
+    <script>
+        var TRange=null;
+
+        function findString (str) {
+            if (parseInt(navigator.appVersion)<4) return;
+            var strFound;
+            if (window.find) {
+
+                // CODE FOR BROWSERS THAT SUPPORT window.find
+
+                strFound=self.find(str);
+                if (!strFound) {
+                    strFound=self.find(str,0,1)
+                    while (self.find(str,0,1)) continue;
+                }
+            }
+
+
+            if (!strFound) alert ("String '"+str+"' not found!")
+            return;
+        }
+    </script>
+
+</head>
+<body id="phpbb" class="nojs notouch section-index ltr  " style="background-color: #eaecf0">
+
+    <table style="background-color: black; width: 100%">
+        <div class="row">
+
+            <tr>
+                <td style="padding-left: 20px;">
+                    <img src="~/Front/Forum/images/logo.png" style="height: 20px; padding-left: 10px; margin-top: 5px">
+
+                </td>
+                <td>
+                    <img src="~/Front/Forum/images/black.png" style="height: 20px; padding-left: 80px; margin-top: 5px">
+
+                </td>
+
+                <td>
+                    <img src="~/Front/Forum/images/social.png " style="height: 30px ; margin-top: 5px">
+
+                </td>
+                <td>
+                    <img src="~/Front/Forum/images/black.png" style="height: 20px; padding-left: 60px; margin-top: 5px">
+
+                </td>
+
+                @if (currentUser.id == 0)
+                {
+
+
+
+                    <td style="width: 2px">
+                        <img src="~/Front/Forum/images/m.png" style="height: 15px ">
+
+                    </td>
+
+                    <td class="top-bar">
+                        <ul class="tools">
+                            <li>
+                                <a href="~/Forum/Login">
+                                    <span class="hidden-md" style="font-size: 10px">Se connecter!</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </td>
+                }
+                else
+                {
+                    <td class="top-bar">
+                        <ul class="tools">
+                            <li>
+                                <a href="#">
+                                    <span class="hidden-md" style="font-size: 10px">Bonjour,@currentUser.login</span>
+
+                                </a>
+                                |
+                                <a href="@Url.Action("Logout")">
+                                    <span class="hidden-md" style="font-size: 10px">LogOut</span>
+
+                                </a>
+                            </li>
+                        </ul>
+                    </td>
+                }
+
+
+
+            </tr>
+        </div>
+    </table>
+
+    <div id="wrap-body">
+
+        <div class="chunk">
+
+            <div class="wrap-subhead-main">
+
+                <ul id="breadcrumbs-main" role="menubar">
+
+                    <li class="font-icon responsive-menu dropdown-container" data-skip-responsive="true" style="margin-top:10px">
+                        <a href="#" class="responsive-menu-link dropdown-trigger dropdown-toggle"><i class="fa fa-bars"></i></a>
+                        <div class="dropdown hidden">
+                            <div class="pointer"><div class="pointer-inner"></div></div>
+                            <ul class="dropdown-contents" role="menu">
+
+                                <li class="separator"></li>
+                                <li class="font-icon icon-search-unanswered"><a href="./search.php?style=3&amp;search_id=unanswered" role="menuitem"><i class="fa fa-file-o"></i>Unanswered posts</a></li>
+                                <li class="font-icon icon-search-active"><a href="./search.php?style=3&amp;search_id=active_topics" role="menuitem"><i class="fa fa-fire"></i>Active topics</a></li>
+                                <li class="separator site-menu"></li>
+
+                                <li data-skip-responsive="true" class="site-menu"><a href="./faq.php?style=3" rel="help" title="Frequently Asked Questions">FAQ</a></li>
+                                <li class="site-menu">
+                                    <a href="#" title="Example">Drop Down</a>
+                                    <ul>
+                                        <li><a href="#">Lorem ipsum</a></li>
+                                        <li><a href="#">Welcome to phpBB3</a></li>
+                                        <li><a href="#">Frequently Asked Questions</a></li>
+                                        <li><a href="#">BBCode example</a></li>
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="breadcrumbs rightside">
+                        <span class="crumb"><a href="~/Forum/First" accesskey="h" itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-navbar-reference="index" title="Board index"><i class="fa fa-home"></i><span>Forum  </span></a></span>
+                    </li>
+
+                    <li class="breadcrumbs rightside">
+                        @{ string redirect = "http://localhost:3604/Forum/ViewForum/"+idcategory;}
+                        <span class="crumb"><a href="@redirect" accesskey="h" itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-navbar-reference="index" title="Board index"><i class="fa fa-home"></i><span>Sous Categories</span></a></span>
+                    </li>
+                </ul>
+
+
+            </div>
+            <br /><br /><br />
+
+
+
+
+            <div class="action-bar top">
+
+                <div class="buttons">
+
+                    <a href="~/Forum/AddTopic" class="button font-icon" title="Ajouter un nouveau sujet">
+                                <i class="fa fa-pencil"></i>Noveau Sujet
+                            </a>
+
+            </div>
+
+            <div class="search-box" role="search">
+                <form method="get" id="topic-search" action="javascript:void();" onsubmit="if(this.t1.value!='')parent.findString(this.t1.value);return(false);">
+                    <fieldset>
+                        <input class="inputbox search" type="search" name="t1" id="t1" size="20" placeholder="Rechercher dans ce sujet…">
+                        <button class="button" type="submit" title="Search" onclick="" name="b1"><i class="fa fa-search"></i></button>
+                        <input type="hidden" name="t" value="2">
+                        <input type="hidden" name="sf" value="msgonly">
+                        <input type="hidden" name="style" value="3">
+
+
+
+
+                    </fieldset>
+                </form>
+            </div>
+
+            <div class="pagination">
+                6 sous categorie(s)
+                &bull; Page <strong>1</strong> of <strong>1</strong>
+            </div>
+        </div>
+
+
+        @foreach (var i in Model)
+        {
+            if (i.category.idCategory==idcategory)
+            {
+
+
+
+                    <div class="forabg" style="background-color: black!important;">
+            <div class="inner">
+                <ul class="topiclist">
+                    <li class="header">
+                        <dl class="icon">
+                            <dt>
+                            <div class="list-inner"> @i.Name
+                                 </div>
+                            </dt>
+                            <dd class="posts">Réponse(s)</dd>
+                            <dd class="views">Favoris</dd>
+                          
+
+                            <dd class="lastpost"><span>Dernière Réponse</span></dd>
+                        </dl>
+                    </li>
+                </ul>
+                @foreach (var topic in topics)
+                            {
+
+                           if (topic.souscategory.idSousCategory == i.idSousCategory)
+                           {
+                        
+
+                           
+                                <ul class="topiclist forums">
+
+                                    <li class="row bg1 global-announce">
+                                        <dl class="icon global_read">
+                                            <dt title="No unread posts">
+                                                <div class="list-inner">
+                                                    <a href="@Url.Action("ViewTopic", new {id = topic.idTopic, idRep=0})" class="topictitle">@topic.sujet</a><br />
+
+                                                    par <a href="memberlistcfdc.html?style=3&amp;mode=viewprofile&amp;u=2" style="color: #AA0000;" class="username-coloured">
+                                                        @topic.user.login
+                                                                        
+                                                    </a>
+
+                                                    &raquo; <strong>@Convert.ToString(string.Format("{0:dd/MM/yyyy}", topic.dateCreation))</strong>
+                        &raquo; in <a href = "" >@topic.souscategory.category.NameCategory
+                        &raquo;
+                        @topic.souscategory.Name</a>
+                                                    <div class="r-lastpost-container">
+                                                        <a href="viewtopic42d4.html?style=3&amp;f=2&amp;t=2&amp;p=2#p2" title="Go to last post" class="r-lastpost"><i class="fa fa-angle-right"></i></a>
+
+
+
+                                                        <div class="r-lastpost-container">
+                                                            <a href="viewtopic42d4.html?style=3&amp;f=2&amp;t=2&amp;p=2#p2" title="Go to last post" class="r-lastpost"><i class="fa fa-angle-right"></i></a>
+                                                        </div>
+
+                                                    </div>
+                                        </dt>
+                                            @{ int nbmsg = 0;}
+                                            @foreach (var msg in messages)
+                                            {
+                                                if (msg.topic.idTopic== topic.idTopic)
+                                                {
+                                                    nbmsg = nbmsg + 1;
+                                                }
+                                            }
+                                        <dd class="posts"> @nbmsg   <dfn>Replies</dfn></dd>
+                                        <dd class="views">
+                                          
+                                                @{ int nbfavoris = 0;}
+                                                @foreach (var favo in favoriss)
+                                                {
+
+
+
+
+
+                                                    if ((favo.idTopic == topic.idTopic) && (favo.idUser == currentUser.id))
+                                                    {
+                                                        nbfavoris = nbfavoris + 1;
+                                                    }
+                                                   
+                                                }
+                                                @if (nbfavoris == 0)
+                                                {                                  
+                                             <a href="@Url.Action("AddFavoris", new { id=topic.idTopic, iduser=currentUser.id, idcat=idcategory })">
+
+                                                <img class="avatar" src="~/Front/Forum/images/icon/favempty.png" style="width:20px ;height:20px" alt="User avatar" />
+                                            </a>
+                                                }
+                                                @if (nbfavoris != 0)
+                                                {
+                                                    <img class="avatar" src="~/Front/Forum/images/icon/fav.png" style="width:20px ;height:20px" alt="User avatar" />
+                                                }
+
+                                           
+
+                                                <dfn>Views</dfn>
+
+</dd>
+                                           
+                                            @if (nbmsg == 0)
+                                            {
+                                                <p><centre>pas de réponse!</centre></p>
+                                            }
+
+                                            else { 
+                                        <dd class="lastpost">
+                                            <span>
+                                                <dfn>Last post </dfn>
+                                                par
+
+                                                <a href="#" style="color: #AA0000;" class="username-coloured"> @lastpost[lastpost.Count()-1].user.login </a>
+                                                <span class="lastpostavatar">
+                                                    <img class="avatar" src="~/Front/Forum/images/icon/avatar.png" style="width:30px ;height:30px" alt="User avatar" />
+                                                </span>
+                                                <a href="@Url.Action("ViewTopic", new {id = topic.idTopic, idRep= @lastpost[lastpost.Count() - 1].idMessage })" class="lastpost-last"><i class="fa fa-arrow-right"></i></a>
+                                                <br /> @lastpost[lastpost.Count() - 1].datePost
+
+                                            </span>
+                                        </dd>
+
+                                            }
+                                    </dl>
+                                </li>
+
+
+                            </ul>
+
+                           }
+                }
+                           
+                </div>
+               
+            </div>
+                                   }
+                               }
+
+
+
+
+    <div class="stat-block online-list">
+        <h3>Qui est en Ligne?</h3>
+        <p>
+            Au total, il y a
+            <strong>{{ users|length }}</strong>
+                                    Utilisateur(s) en Ligne :
+
+                                    <br />
+
+                                    <br />
+
+                                    Utlisateur(s) Enregistrés:
+
+                                    <br />
+
+                                    <em>
+                                        Legend:
+                                        <a style="color:#AA0000" href="memberlistd454.html?style=3&amp;mode=group&amp;g=5">Administrators</a>, <a style="color:#00AA00" href="memberlist548f.html?style=3&amp;mode=group&amp;g=4">Global moderators</a>, <span style="color:#9E8DA7">Bots</span>, <a href="memberlistdddb.html?style=3&amp;mode=group&amp;g=2">Registered users</a>
+                                    </em>
+                                    </p>
+                                    <p id="online-list-stat">
+                                        Total sous-categories <strong>{{ total_sous_categories|length }}</strong> &bull; Total topics <strong>{{ total_topic|length }}</strong> &bull; Total members <strong>{{ total_user }}</strong> &bull; Our newest member <strong><a href="memberlistf184.html?style=3&amp;mode=viewprofile&amp;u=1114" class="username">Oualha</a></strong>
+                                    </p>
+            </div>
+
+
+
+
+            <script type="text/javascript" src="~/Front/Forum/assets/javascript/editor.js"></script>
+
+
+            <script type="text/javascript" src="~/Front/Forum/styles/ariki/template/forum_fn.js?assets_version=174.js"></script>
+
+            <script type="text/javascript" src="~/Front/Forum/styles/ariki/template/ajax6148.js"></script>
+
+            <script type="text/javascript" src="~/Front/Forum/styles/ariki/template/chosen.jquery.min6148.js"></script>
+
+
+
+        </div>
+    </div>
+
+
+
+</body>
+</html>
